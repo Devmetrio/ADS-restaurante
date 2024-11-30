@@ -10,7 +10,8 @@ class viewMensajeSistema
           icon: "<?= $icono ?>",
           title: "<?= $titulo ?>",
           text: "<?= $texto ?>",
-          confirmButtonText: "Ok"
+          confirmButtonText: "Ok",
+          heightAuto: false
         });
       </script>
     <?php

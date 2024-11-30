@@ -2,7 +2,7 @@
 
 class panelGestionarMesas
 {
-  public function gestionarMesasShow($mesas)
+  public function gestionarMesasShow($mesas = null)
   {
 ?>
     <!DOCTYPE html>
@@ -88,6 +88,33 @@ class panelGestionarMesas
           cursor: pointer;
         }
 
+        .btn-crear,
+        .btn-regresar {
+          padding: 10px 20px;
+          font-size: 16px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .btn-crear {
+          background-color: #4CAF50;
+          color: white;
+        }
+
+        .btn-crear:hover {
+          background-color: #45a049;
+        }
+
+        .btn-regresar {
+          background-color: #f39c12;
+          color: white;
+        }
+
+        .btn-regresar:hover {
+          background-color: #e67e22;
+        }
+
 
         .btn-deshabilitar {
           background-color: #f44336;
@@ -116,6 +143,15 @@ class panelGestionarMesas
         .btn-eliminar:hover {
           background-color: #444;
         }
+
+        .botones-container {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          /* Espacio entre los botones */
+          margin-bottom: 20px;
+          /* Espacio debajo de los botones */
+        }
       </style>
     </head>
 
@@ -124,13 +160,16 @@ class panelGestionarMesas
       <h1>Gestión de Mesas</h1>
 
       <div class="container">
-        <div class="actions">
-          <button>Crear Mesa</button>
+        <div class="botones-container">
+          <a href="/ModuloAdministracion/UCgestionarMesas/indexFormMesas.php">
+            <button class="btn btn-crear">Crear mesa</button>
+          </a>
+          <a href="/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
+            <button class="btn btn-regresar">Regresar a panel</button>
+          </a>
         </div>
-
         <table>
           <thead>
-
             <tr>
               <th>Número de Mesa</th>
               <th>Capacidad</th>
@@ -145,16 +184,17 @@ class panelGestionarMesas
                 <td><?= htmlspecialchars($mesa['capacidad']) ?></td>
                 <td><?= htmlspecialchars($mesa['estadoTecnico']) ?></td>
                 <td>
-                  <?php if ($mesa['estadoTecnico'] == 1) : ?>
-                    <button
-                      class="btn btn-deshabilitar" type="submit" name="btnDeshabilitar" value="<?= htmlspecialchars($mesa['idMesa']) ?>">
-                      Deshabilitar
-                    </button>
-                  <?php else : ?>
-                    <button class="btn btn-habilitar" type="submit" name="btnHabilitar" value="<?= htmlspecialchars($mesa['idMesa']) ?>">
-                      Habilitar
-                    </button>
-                  <?php endif; ?>
+                  <form action="/ModuloAdministracion/UCgestionarMesas/getMesas.php?idMesa=<?= htmlspecialchars($mesa['idMesa']) ?>" method="POST">
+                    <?php if ($mesa['estadoTecnico'] == 1) : ?>
+                      <button
+                        class="btn btn-deshabilitar" type="submit" name="btnDeshabilitar">
+                        Deshabilitar
+                      </button>
+                    <?php else : ?>
+                      <button class="btn btn-habilitar" type="submit" name="btnHabilitar">
+                        Habilitar
+                      </button>
+                    <?php endif; ?>
                   </form>
                 </td>
               </tr>
