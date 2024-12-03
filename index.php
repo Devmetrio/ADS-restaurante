@@ -1,5 +1,5 @@
 <?php
-require_once 'ModuloSeguridad\UCautenticarUsuario\formAutenticarUsuario.php';
+require_once 'src\ModuloSeguridad\UCautenticarUsuario\formAutenticarUsuario.php';
 
 
 $index = new FormAutenticacionUsuario();

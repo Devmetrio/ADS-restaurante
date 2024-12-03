@@ -18,7 +18,7 @@ class viewMensajeValidacion
                 if (result.isConfirmed) {
                     valor = "aceptar"
                 }
-                window.location.href = "/ModuloAdministracion/UCgestionarMesas/getMesas.php?opcion="+valor+"&idMesa=<?=$id?>&accion=<?=$accion?>";
+                window.location.href = "/src/ModuloAdministracion/UCgestionarMesas/getMesas.php?opcion="+valor+"&idMesa=<?=$id?>&accion=<?=$accion?>";
             });
         </script>
 <?php

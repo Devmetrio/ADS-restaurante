@@ -1,7 +1,8 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloSeguridad/UCautenticarUsuario/formAutenticarUsuario.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloSeguridad/UCautenticarUsuario/controlAutenticarUsuario.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/compartido/viewMensajeSistema.php');
+session_start();
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloSeguridad/UCautenticarUsuario/formAutenticarUsuario.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloSeguridad/UCautenticarUsuario/controlAutenticarUsuario.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php');
 
 
 $nombreCampoErroneo = '';

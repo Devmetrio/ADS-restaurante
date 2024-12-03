@@ -1,0 +1,17 @@
+{
+    "name": "edison/htdocs",
+    "autoload": {
+        "psr-4": {
+            "Edison\\Htdocs\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "German",
+            "email": "briph21@gmail.com"
+        }
+    ],
+    "require": {
+        "cboden/ratchet": "^0.4.4",
+    }
+}

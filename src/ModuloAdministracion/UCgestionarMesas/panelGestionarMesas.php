@@ -161,10 +161,10 @@ class panelGestionarMesas
 
       <div class="container">
         <div class="botones-container">
-          <a href="/ModuloAdministracion/UCgestionarMesas/indexFormMesas.php">
+          <a href="indexFormMesas.php">
             <button class="btn btn-crear">Crear mesa</button>
           </a>
-          <a href="/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
+          <a href="/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
             <button class="btn btn-regresar">Regresar a panel</button>
           </a>
         </div>
@@ -184,7 +184,7 @@ class panelGestionarMesas
                 <td><?= htmlspecialchars($mesa['capacidad']) ?></td>
                 <td><?= htmlspecialchars($mesa['estadoTecnico']) ?></td>
                 <td>
-                  <form action="/ModuloAdministracion/UCgestionarMesas/getMesas.php?idMesa=<?= htmlspecialchars($mesa['idMesa']) ?>" method="POST">
+                  <form action="/src/ModuloAdministracion/UCgestionarMesas/getMesas.php?idMesa=<?= htmlspecialchars($mesa['idMesa']) ?>" method="POST">
                     <?php if ($mesa['estadoTecnico'] == 1) : ?>
                       <button
                         class="btn btn-deshabilitar" type="submit" name="btnDeshabilitar">

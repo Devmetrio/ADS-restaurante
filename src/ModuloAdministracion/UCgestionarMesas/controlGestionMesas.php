@@ -1,8 +1,8 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/modelo/Mesa.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/compartido/viewMensajeSistema.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloAdministracion/UCgestionarMesas/panelGestionarMesas.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloAdministracion/UCgestionarMesas/panelGestionarMesas.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Mesa.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarMesas/panelGestionarMesas.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarMesas/panelGestionarMesas.php');
 
 class controlGestionMesas
 {

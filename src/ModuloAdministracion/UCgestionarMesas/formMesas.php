@@ -113,7 +113,7 @@ class formMesas
             <div class="form-container">
                 <h2>Agregar Mesa</h2>
                 <hr >
-                <form action="/ModuloAdministracion/UCgestionarMesas/getMesas.php" method="POST">
+                <form action="/src/ModuloAdministracion/UCgestionarMesas/getMesas.php" method="POST">
                     <div class="form-group mb-3 mt-4">
                         <label for="capacidad" class="mb-2">Capacidad:</label>
                         <div>

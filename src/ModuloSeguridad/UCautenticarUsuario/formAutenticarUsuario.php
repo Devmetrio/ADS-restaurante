@@ -1,6 +1,4 @@
 <?php
-
-
 class FormAutenticacionUsuario
 {
     public function formAutenticarUsuarioShow()
@@ -56,7 +54,7 @@ class FormAutenticacionUsuario
 
         <body>
             <h1>Autenticación de Usuario</h1>
-            <form action="/ModuloSeguridad/UCautenticarUsuario/getUsuario.php" method="POST">
+            <form action="/src/ModuloSeguridad/UCautenticarUsuario/getUsuario.php" method="POST">
                 <label for="txtUsuario">Usuario:</label>
                 <input type="text" name="txtLogin">
                 <label for="txtContraseña">Contraseña:</label>

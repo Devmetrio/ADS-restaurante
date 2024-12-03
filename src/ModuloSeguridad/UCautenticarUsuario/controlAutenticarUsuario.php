@@ -1,8 +1,8 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/modelo/Usuario.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloSeguridad/UCautenticarUsuario/formAutenticarUsuario.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/compartido/viewMensajeSistema.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Usuario.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloSeguridad/UCautenticarUsuario/formAutenticarUsuario.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php');
 
 class controlAutenticarUsuario
 {
@@ -39,7 +39,7 @@ class controlAutenticarUsuario
           $_SESSION['rol'] = $objUsuario->obtenerRol($txtLogin);
           $_SESSION['autenticado'] = "SI";
 
-          header('Location: /ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php');
+          header('Location: /src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php');
         }
       }
     }

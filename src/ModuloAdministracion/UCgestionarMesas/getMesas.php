@@ -1,9 +1,9 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloAdministracion/UCgestionarMesas/controlGestionMesas.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/compartido/viewMensajeSistema.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/compartido/viewMensajeValidacion.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloAdministracion/UCgestionarMesas/panelGestionarMesas.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/ModuloAdministracion/UCgestionarMesas/formMesas.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarMesas/controlGestionMesas.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeValidacion.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarMesas/panelGestionarMesas.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarMesas/formMesas.php');
 
 $btnHabilitar = $_POST['btnHabilitar'] ?? null;
 $btnDeshabilitar = $_POST['btnDeshabilitar'] ?? null;
