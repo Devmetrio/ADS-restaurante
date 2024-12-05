@@ -11,7 +11,7 @@ class controlGestionMesas
     $mesaObject = new Mesa();
     $mesaObject->agregarMesa($capacidad,$idSeccion, $habilitado);
 
-    header('Location: /ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
+    header('Location: /src/ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
   }
 
   public function habilitarMesa($id)
@@ -19,7 +19,7 @@ class controlGestionMesas
     $mesaObject = new Mesa();
     $mesaObject->actualizarEstado($id, 1);
 
-    header('Location: /ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
+    header('Location: /src/ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
   }
 
   public function deshabilitarMesa($id)
@@ -27,6 +27,6 @@ class controlGestionMesas
     $mesaObject = new Mesa();
     $mesaObject->actualizarEstado($id, 0);
     
-    header('Location: /ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
+    header('Location: /src/ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
   }
 }

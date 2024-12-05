@@ -22,7 +22,8 @@ class viewMensajeSistema
           icon: "<?= $icono ?>",
           title: "<?= $titulo ?>",
           text: "<?= $texto ?>",
-          confirmButtonText: "Ok"
+          confirmButtonText: "Ok",
+          heightAuto: false
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = "<?= $ruta ?>";

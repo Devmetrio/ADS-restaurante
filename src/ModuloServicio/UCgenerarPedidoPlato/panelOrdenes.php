@@ -108,6 +108,7 @@ class panelOrdenes
                     margin-top: 20px;
                     display: flex;
                     justify-content: center;
+                    gap:5px;
                 }
 
                 .btn-seleccionar button {
@@ -143,7 +144,7 @@ class panelOrdenes
                         <?php if ($controlOrdenes): ?>
                             <form action="getPedidos.php" method="POST">
                                 <?php foreach ($controlOrdenes as $mesa): ?>
-                                    <button class="<?= ($mesa['idMesa'] == $idMesa) ? 'selected' : ''; ?>" value=<?= $mesa['idMesa']; ?> name="btnMesa" type="submit">
+                                    <button class="<?= ($mesa['idMesa'] == $idMesa) ? 'selected' : ''; ?>" value=<?= $mesa['idMesa']; ?> name="btnOrdenMesa" type="submit">
                                         Mesa <?php echo $mesa['idMesa']; ?>
                                     </button>
                                 <?php endforeach; ?>
@@ -189,6 +190,9 @@ class panelOrdenes
                         <button>
                             Seleccionar mesa
                         </button>
+                    </a>
+                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
+                        <button>Regresar a panel</button>
                     </a>
                 </div>
             </div>
