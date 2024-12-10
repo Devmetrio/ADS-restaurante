@@ -1,5 +1,4 @@
 <?php
-
 class panelNumerico
 {
 
@@ -112,7 +111,7 @@ class panelNumerico
                     okButton.style.borderRadius = '5px';
                     okButton.onclick = () => {
                         console.log(display.textContent);
-                        window.location.href = `/src/ModuloServicio/UCgenerarPedidoPlato/getPedidos.php?cantidad=${display.textContent}&capacidadMesa=<?=$capacidadMesa?>&id=<?=$idMesa?>`;
+                        window.location.href = `/src/ModuloServicio/UCgenerarPedidoPlato/getPedidos.php?btnOK=OK&cantidad=${display.textContent}&capacidadMesa=<?=$capacidadMesa?>&id=<?=$idMesa?>`;
                         document.body.removeChild(modalOverlay); // Cerrar el modal
                     };
 

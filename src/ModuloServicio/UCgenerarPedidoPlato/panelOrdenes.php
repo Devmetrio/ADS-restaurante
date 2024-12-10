@@ -1,5 +1,4 @@
 <?php
-
 class panelOrdenes
 {
     public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null)
@@ -48,12 +47,13 @@ class panelOrdenes
 
                 .mesas-list {
                     flex: 1;
-                    border: 1px solid #444;
+                    border: 2px solid #444;
                     padding: 10px;
-                    border-radius: 5px;
+                    border-radius: 10px;
                     overflow-y: hidden;
                     max-height: 400px;
                     cursor: grab;
+                    user-select: none; /* Deshabilita la selección de texto */
                 }
 
                 .mesas-list button {
@@ -75,7 +75,7 @@ class panelOrdenes
 
                 .detalles {
                     flex: 2;
-                    border: 1px solid #444;
+                    border: 2px solid #444;
                     padding: 10px;
                     border-radius: 5px;
                     overflow-y: hidden;
@@ -86,6 +86,7 @@ class panelOrdenes
                 table {
                     width: 100%;
                     border-collapse: collapse;
+                    user-select: none; /* Deshabilita la selección de texto */
                 }
 
                 table,
@@ -149,6 +150,7 @@ class panelOrdenes
                                     </button>
                                 <?php endforeach; ?>
                             </form>
+
                         <?php else: ?>
                             <p>Cargando...</p>
                         <?php endif; ?>
@@ -179,6 +181,8 @@ class panelOrdenes
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                        <?php elseif($idMesa):?>
+                        <p>Se ha iniciado el proceso de orden de esta mesa</p>
                         <?php else: ?>
                             <p>Selecciona una mesa para ver los detalles de la orden.</p>
                         <?php endif; ?>

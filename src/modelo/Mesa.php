@@ -26,9 +26,17 @@ class Mesa extends conexion {
     $this->desconectar();
   }
 
-  public function actualizarEstado($idMesa, $valorEstado){
+  public function actualizarEstadoTecnico($idMesa, $valorEstado){
     $this->conectar();
     $sql = "UPDATE mesas SET estadoTecnico = '$valorEstado' WHERE idMesa = $idMesa";
+    $respuesta = $this->conectar()->query($sql);
+
+    $this->desconectar();
+  }
+
+  public function actualizarEstadoSalon($idMesa, $valor){
+    $this->conectar();
+    $sql = "UPDATE mesas SET idMesaEstado = '$valor' WHERE idMesa = $idMesa";
     $respuesta = $this->conectar()->query($sql);
 
     $this->desconectar();

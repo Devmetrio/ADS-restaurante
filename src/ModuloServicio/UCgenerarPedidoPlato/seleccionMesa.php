@@ -144,10 +144,12 @@ class seleccionMesas
                     </div>
                 </div>
                 <form action="getPedidos.php" method="POST">
-                <button class="btn-action">Juntar Mesas</button>
-                <?php if($id !== null) :?>
-                <button class="btn-action" type="submit" value="Iniciar" name="btnIniciar">Iniciar Orden</button>
-                <?php endif; ?>
+                    <?php if ($id !== null) : ?>
+                        <button class="btn-action" type="submit" value="Cancelar" name="btnCancelarSelec">Cancelar seleccion</button>
+                        <button class="btn-action">Juntar Mesas</button>
+                        <button class="btn-action" type="submit" value="Iniciar" name="btnIniciar">Iniciar Orden</button>
+                        <input type="hidden" value="<?= $id?>" name="idMesa">
+                    <?php endif; ?>
                 </form>
             </div>
         </body>
@@ -211,16 +213,18 @@ class seleccionMesas
                     // Estilo según el estado
                     if (mesa.idMesaEstado === 1) {
                         button.classList.add('libre');
+                        button.value = 0;
                     } else if (mesa.idMesaEstado === 2) {
                         button.classList.add('espera');
+                        button.value = 1;
                     } else if (mesa.idMesaEstado === 3) {
+                        button.value = 0;
                         button.classList.add('ocupado');
                     }
 
                     // Marcar la mesa seleccionada
-                    if (idSeleccionado !== null && mesa.idMesa == idSeleccionado) {
+                    if (mesa.idMesa == idSeleccionado) {
                         button.classList.add('select');
-                        console.log(mesa.capacidad);
                     }
 
                     // Evento click para actualizar los inputs ocultos y enviar el formulario

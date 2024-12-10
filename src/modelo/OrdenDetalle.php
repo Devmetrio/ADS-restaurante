@@ -10,7 +10,7 @@ class OrdenDetalle extends conexion
                 co.idMesa AS Mesa FROM OrdenDetalles od 
                 INNER JOIN    Ordenes o ON od.idOrden = o.idOrden 
                 INNER JOIN    ControlOrdenes co ON co.idOrden = o.idOrden
-                INNER JOIN    MenuItems mi ON od.idItem = mi.idItem WHERE co.idMesa = $idMesa;";
+                INNER JOIN    MenuItems mi ON od.idItem = mi.idItem WHERE co.idMesa = $idMesa";
         $respuesta = $this->conectar()->query($sql);
 
         // Verificar si se encontró alguna fila
@@ -19,6 +19,28 @@ class OrdenDetalle extends conexion
             return null;
         }
 
+        $this->desconectar();
+        return $respuesta;
+    }
+
+    public function insertarOrdenDetalle($comanda, $idOrden)
+    {
+        $this->conectar();
+        $values = [];
+
+        foreach ($comanda as $item) {
+            $idItem = (int)$item['id'];
+            $cantidad = (int)$item['cantidad'];
+            $subtotal = (float)$item['subtotal'];
+            
+            // Agregar los valores en formato SQL
+            $values[] = "($idItem, $cantidad, $idOrden, $subtotal)";
+        }
+    
+        // Crear la consulta SQL
+        $sql = "INSERT INTO OrdenDetalles (idItem, cantidad, idOrden, subtotal) VALUES " . implode(", ", $values);
+
+        $respuesta = $this->conectar()->query($sql);
         $this->desconectar();
         return $respuesta;
     }

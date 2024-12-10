@@ -35,6 +35,7 @@ class controlAutenticarUsuario
           $viewMessageSistemaObject = new viewMensajeSistema();
           $viewMessageSistemaObject->viewMensajeSistemaShow('error', 'Error', 'Usuario inactivo');
         } else {
+          $_SESSION['id'] = $objUsuario->obtenerId($txtLogin);
           $_SESSION['login'] = $txtLogin;
           $_SESSION['rol'] = $objUsuario->obtenerRol($txtLogin);
           $_SESSION['autenticado'] = "SI";

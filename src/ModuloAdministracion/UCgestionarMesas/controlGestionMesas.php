@@ -17,7 +17,7 @@ class controlGestionMesas
   public function habilitarMesa($id)
   {
     $mesaObject = new Mesa();
-    $mesaObject->actualizarEstado($id, 1);
+    $mesaObject->actualizarEstadoTecnico($id, 1);
 
     header('Location: /src/ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
   }
@@ -25,7 +25,7 @@ class controlGestionMesas
   public function deshabilitarMesa($id)
   {
     $mesaObject = new Mesa();
-    $mesaObject->actualizarEstado($id, 0);
+    $mesaObject->actualizarEstadoTecnico($id, 0);
     
     header('Location: /src/ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php');
   }

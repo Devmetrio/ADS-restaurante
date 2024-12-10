@@ -95,7 +95,21 @@ class Usuario extends conexion {
     return $rol;
   }
 
+  public function obtenerId($txtLogin){
+    $this->conectar();
+    $sql = "SELECT idUsuario FROM usuarios WHERE login = '$txtLogin'";
+    $respuesta = $this->conectar()->query($sql);
 
+    // Verificar si se encontró alguna fila
+    if ($respuesta->num_rows == 0) {
+      $this->desconectar();
+      return null;
+    }
+
+    $fila = $respuesta->fetch_assoc();
+    $id= $fila['idUsuario'];
+    return $id;
+}
 }
 
 ?>

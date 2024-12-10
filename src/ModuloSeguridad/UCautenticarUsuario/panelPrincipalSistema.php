@@ -6,7 +6,7 @@ class panelPrincipalSistema
     {
         $rol = $_SESSION['rol'];
         $login = $_SESSION['login'];
-
+        $id = $_SESSION['id'];
 ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -23,6 +23,7 @@ class panelPrincipalSistema
                     <h1>Bienvenido <?= $rol ?></h1>
                     <p>Panel principal del sistema</p>
                     <p><i class="fa-regular fa-user"></i> Usuario: <?= $login ?></p>
+                    <p><?= $id?></p>
                     <a href="/src/ModuloAdministracion/UCgestionarMesas/indexGestionarMesas.php">Gestionar Mesas</a>
                     <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php">Panel de Ordenes</a>
                     <a class="nav-link" href="/src/ModuloSeguridad/UCautenticarUsuario/cerrarSesion.php">Cerrar Sesión</a>
