@@ -58,7 +58,7 @@ class ControlOrden extends conexion
 
   public function actualizarOrden($idOrden, $idControl){
     $this->conectar();
-    $sql = "UPDATE controlorden SET idOrden = $idOrden WHERE idControlOrden = $idControl;";
+    $sql = "UPDATE controlordenes SET idOrden = $idOrden WHERE idControlOrden = $idControl;";
     $respuesta = $this->conectar()->query($sql);
 
     $this->desconectar();

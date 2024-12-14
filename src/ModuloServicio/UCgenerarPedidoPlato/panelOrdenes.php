@@ -11,6 +11,7 @@ class panelOrdenes
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Control de Mesas</title>
+            <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css" rel="stylesheet">
             <style>
                 body {
                     font-family: Arial, sans-serif;
@@ -53,7 +54,8 @@ class panelOrdenes
                     overflow-y: hidden;
                     max-height: 400px;
                     cursor: grab;
-                    user-select: none; /* Deshabilita la selección de texto */
+                    user-select: none;
+                    /* Deshabilita la selección de texto */
                 }
 
                 .mesas-list button {
@@ -86,7 +88,8 @@ class panelOrdenes
                 table {
                     width: 100%;
                     border-collapse: collapse;
-                    user-select: none; /* Deshabilita la selección de texto */
+                    user-select: none;
+                    /* Deshabilita la selección de texto */
                 }
 
                 table,
@@ -109,7 +112,7 @@ class panelOrdenes
                     margin-top: 20px;
                     display: flex;
                     justify-content: center;
-                    gap:5px;
+                    gap: 5px;
                 }
 
                 .btn-seleccionar button {
@@ -172,17 +175,17 @@ class panelOrdenes
                                 <tbody>
                                     <?php foreach ($ordenDetalles as $index => $detalle): ?>
                                         <tr>
-                                            <td style="text-align: center;"><?php echo $index + 1; ?></td>
-                                            <td style="width: 20%;"><?php echo $detalle['NombrePlato']; ?></td>
-                                            <td><?php echo $detalle['Descripcion']; ?></td>
-                                            <td style="text-align: center;"><?php echo $detalle['Cantidad']; ?></td>
-                                            <td style="width: 15%;">s/ <?php echo number_format($detalle['Precio'], 2); ?></td>
+                                            <td style="text-align: center;"><?= $index + 1; ?></td>
+                                            <td style="width: 20%;"><?= htmlspecialchars($detalle['NombrePlato']); ?></td>
+                                            <td><?= htmlspecialchars($detalle['Descripcion']); ?></td>
+                                            <td style="text-align: center;"><?= (int)$detalle['Cantidad']; ?></td>
+                                            <td style="width: 15%;">s/ <?= number_format((float)$detalle['Subtotal'], 2); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
-                        <?php elseif($idMesa):?>
-                        <p>Se ha iniciado el proceso de orden de esta mesa</p>
+                        <?php elseif ($idMesa): ?>
+                            <p>Se ha iniciado el proceso de orden de esta mesa</p>
                         <?php else: ?>
                             <p>Selecciona una mesa para ver los detalles de la orden.</p>
                         <?php endif; ?>
@@ -191,13 +194,16 @@ class panelOrdenes
                 <!-- Botón Seleccionar Mesa -->
                 <div class="btn-seleccionar">
                     <a href="indexSeleccionMesas.php">
-                        <button>
-                            Seleccionar mesa
-                        </button>
+                        <button>Seleccionar mesa</button>
                     </a>
                     <a href="/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
                         <button>Regresar a panel</button>
                     </a>
+                    <?php if ($ordenDetalles): ?>
+                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?= $ordenDetalles[0]['idOrden'] ?>&idMesa=<?= $ordenDetalles[0]['Mesa'] ?>&idControlMesa=<?=$ordenDetalles[0]['idControlOrden'] ?>" >
+                            <button>Aumentar orden</button>
+                        </a>
+                    <?php endif ?>
                 </div>
             </div>
 
@@ -233,6 +239,7 @@ class panelOrdenes
                 enableDragScroll('.mesas-list');
                 enableDragScroll('.detalles');
             </script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
         </body>
 
         </html>

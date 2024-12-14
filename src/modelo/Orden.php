@@ -7,7 +7,7 @@ class Orden extends conexion
     public function crearOrden($hora)
     {
         $this->conectar();
-        $sql = "INSERT INTO orden (ordenHora) VALUES ($hora)";
+        $sql = "INSERT INTO ordenes (ordenHora) VALUES ('$hora')";
         $respuesta = $this->conectar()->query($sql);
 
         // Verificar si la consulta se ejecutó correctamente

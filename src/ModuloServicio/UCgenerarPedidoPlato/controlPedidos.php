@@ -31,9 +31,9 @@ class controlPedidos
     function enviarOrden($comanda, $idControlOrden, $idMesa)
     {
         $controlOrdenObject = new ControlOrden();
-        $resultado = $controlOrdenObject->verificarOrden($idControlOrden);
+        $idOrden = $controlOrdenObject->verificarOrden($idControlOrden);
 
-        if ($resultado == null) {
+        if ($idOrden == null) {
             $horaActual = date('H:i:s'); 
             $ordenObject = new Orden();
             $idOrden = $ordenObject->crearOrden($horaActual);
@@ -42,7 +42,7 @@ class controlPedidos
         }
 
         $ordenDetalleObject = new OrdenDetalle();
-        $respuesta = $ordenDetalleObject->insertarOrdenDetalle($comanda, $idControlOrden);
+        $respuesta = $ordenDetalleObject->insertarOrdenDetalle($comanda, $idOrden);
 
         if ($respuesta != null) {
             $mesaObject = new Mesa();
@@ -52,7 +52,7 @@ class controlPedidos
             $panelOrdenesObject->panelOrdenesShow();
 
             $viewMensajeSistemaObject = new viewMensajeSistema();
-            $viewMensajeSistemaObject->viewMensajeSistemaShow('succes', 'Mensaje', '¡Se mando envió la orden a produccion!', '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');
+            $viewMensajeSistemaObject->viewMensajeSistemaShow('success', 'Mensaje', '¡Se mando envió la orden a produccion!', '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');
         } else{
             $panelOrdenesObject = new panelOrdenes();
             $panelOrdenesObject->panelOrdenesShow();

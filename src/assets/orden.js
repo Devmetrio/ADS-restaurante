@@ -18,7 +18,7 @@ function verificarComanda() {
 // Función para preparar la comanda antes de enviar el formulario
 function prepararComanda() {
     const comandaInput = document.getElementById('comandaInput');
-    comandaInput.value = verificarComanda(); // Asigna el valor convertido a JSON
+    comandaInput.value = verificarComanda(); 
 }
 
 // Función para guardar la comanda en localStorage
@@ -101,25 +101,22 @@ document.addEventListener("DOMContentLoaded", function () {
         isMouseDown = true;
         startY = e.pageY - tableSection.offsetTop;
         scrollTop = tableSection.scrollTop;
-        tableSection.style.cursor = 'grabbing'; // Cambia el cursor
-        console.log('Mouse down'); // Verifica si se detecta el evento
+        tableSection.style.cursor = 'grabbing'; 
     });
 
     // Función para arrastrar el contenido
     tableSection.addEventListener('mousemove', (e) => {
-        if (!isMouseDown) return; // Si no se ha presionado el ratón, no se hace nada
+        if (!isMouseDown) return; 
         e.preventDefault();
         const y = e.pageY - tableSection.offsetTop;
-        const walk = (y - startY) * 2; // Ajusta la velocidad de desplazamiento
+        const walk = (y - startY) * 2; 
         tableSection.scrollTop = scrollTop - walk;
-        console.log('Moving'); // Verifica si el arrastre está ocurriendo
     });
 
     // Función para finalizar el arrastre
     tableSection.addEventListener('mouseup', () => {
         isMouseDown = false;
         tableSection.style.cursor = 'grab'; // Restablece el cursor
-        console.log('Mouse up'); // Verifica si se detecta el evento de liberación
     });
 
     // Para garantizar que al salir del área del contenedor se detenga el arrastre

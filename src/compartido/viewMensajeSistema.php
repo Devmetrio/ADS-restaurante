@@ -26,6 +26,7 @@ class viewMensajeSistema
           heightAuto: false
         }).then((result) => {
           if (result.isConfirmed) {
+            localStorage.removeItem('comanda'); 
             window.location.href = "<?= $ruta ?>";
           }
         });

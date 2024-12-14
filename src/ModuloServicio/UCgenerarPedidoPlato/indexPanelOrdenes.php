@@ -8,7 +8,7 @@ if (!isset($_SESSION['autenticado'])) {
     header('Location: /');
     exit();
   }
-
+ 
 $idMesa = $_GET['idMesa'] ?? null;
 $ordenDetalles = null;
 

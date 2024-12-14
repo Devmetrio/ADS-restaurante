@@ -115,18 +115,18 @@ if (validarBoton($btnOrdenMesa)) {
   $idMesa = $_POST['idMesa'];
   $comanda = $_POST['comanda'];
   $comandaArray = json_decode($comanda, true);
-echo $idControl ? "algo": "ni mrd";
-  // // Verificar si la comanda está vacía
-  // if (empty($comandaArray)) {
-  //   $ordenMesaObject = new ordenMesa();
-  //   $ordenMesaObject->ordenMesaShow();
 
-  //   $viewMensajeSistemaObject = new viewMensajeSistema();
-  //   $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'La lista de la orden esta vacia, ingrese platos a la orden', '/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php');
-  // } else {
-  //   $controlPedidosObject = new controlPedidos();
-  //   $controlPedidosObject->enviarOrden($comanda, $idControl, $idMesa);
-  // }
+  // Verificar si la comanda está vacía
+  if (empty($comandaArray)) {
+    $ordenMesaObject = new ordenMesa();
+    $ordenMesaObject->ordenMesaShow();
+
+    $viewMensajeSistemaObject = new viewMensajeSistema();
+    $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'La lista de la orden esta vacia, ingrese platos a la orden', '/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php');
+  } else {
+    $controlPedidosObject = new controlPedidos();
+    $controlPedidosObject->enviarOrden($comanda, $idControl, $idMesa);
+  }
 } else {
   $seleccionMesasObject = new seleccionMesas();
   $seleccionMesasObject->seleccionMesaShow();
@@ -134,3 +134,4 @@ echo $idControl ? "algo": "ni mrd";
   $viewMensajeSistemaObject = new viewMensajeSistema();
   $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'No se puede concretar la accion', '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');
 }
+?>
