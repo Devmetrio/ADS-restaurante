@@ -6,8 +6,8 @@ function cargarComanda() {
     const data = localStorage.getItem('comanda');
     if (data) {
         comanda = JSON.parse(data);
-        actualizarTabla();
     }
+    actualizarTabla();
 }
 
 // Función para verificar la comanda
@@ -18,14 +18,13 @@ function verificarComanda() {
 // Función para preparar la comanda antes de enviar el formulario
 function prepararComanda() {
     const comandaInput = document.getElementById('comandaInput');
-    comandaInput.value = verificarComanda(); 
+    comandaInput.value = verificarComanda();
 }
 
 // Función para guardar la comanda en localStorage
 function guardarComanda() {
     localStorage.setItem('comanda', JSON.stringify(comanda));
 }
-
 // Función para agregar un ítem a la comanda
 function agregarAComanda(id, nombre, descripcion, precio) {
     // Buscar si el ítem ya está en la comanda
@@ -47,29 +46,54 @@ function agregarAComanda(id, nombre, descripcion, precio) {
         });
     }
 
-    // Guardar y actualizar la tabla
+    // Guardar en localStorage y actualizar la tabla
     guardarComanda();
     actualizarTabla();
 }
 
-// Función para actualizar la tabla de la comanda
 function actualizarTabla() {
     const tbody = document.querySelector('.order-table tbody');
-    tbody.innerHTML = ''; // Limpiar tabla
+    const filasExistentes = tbody.children.length;
+    let indexInicio = 1;
+    // Tamaño de la comanda actual
+    const tamañoComanda = comanda.length;
 
+    if(filasExistentes >0 && tamañoComanda==0){
+        // El índice de inicio será el número de filas en la tabla menos el tamaño de la comanda actual más 1
+        indexInicio = filasExistentes - tamañoComanda + 2;
+    }
+
+    // Eliminar la fila con el mensaje (si existe)
+    const mensajeFila = tbody.querySelector('tr td[colspan="6"]');
+    if (mensajeFila) {
+        tbody.removeChild(mensajeFila.parentNode);
+    }
+
+    // Eliminar solo las filas creadas por JavaScript (sin el atributo `disabled`)
+    const filasParaEliminar = Array.from(tbody.children);
+    filasParaEliminar.forEach(fila => {
+        const boton = fila.querySelector('.delete-btn');
+        if (boton && !boton.hasAttribute('disabled')) {
+            tbody.removeChild(fila);
+        }
+    });
+
+    // Agregar las filas de la comanda con el índice ajustado
     comanda.forEach((item, index) => {
         const fila = document.createElement('tr');
         fila.innerHTML = `
-            <td>${index + 1}</td>
+            <td>${indexInicio + index}</td> <!-- Ajustar el índice -->
             <td>${item.nombre}</td>
             <td>${item.descripcion}</td>
-            <td>${item.subtotal.toFixed(2)}</td>
+            <td>s/ ${item.subtotal.toFixed(2)}</td>
             <td style="width: 5%; min-width: 30px;">${item.cantidad}</td>
             <td><button class="delete-btn" onclick="eliminarDeComanda(${item.id})">🗑️</button></td>
         `;
         tbody.appendChild(fila);
     });
 }
+
+
 
 // Función para eliminar un ítem de la comanda
 function eliminarDeComanda(id) {
@@ -101,15 +125,15 @@ document.addEventListener("DOMContentLoaded", function () {
         isMouseDown = true;
         startY = e.pageY - tableSection.offsetTop;
         scrollTop = tableSection.scrollTop;
-        tableSection.style.cursor = 'grabbing'; 
+        tableSection.style.cursor = 'grabbing';
     });
 
     // Función para arrastrar el contenido
     tableSection.addEventListener('mousemove', (e) => {
-        if (!isMouseDown) return; 
+        if (!isMouseDown) return;
         e.preventDefault();
         const y = e.pageY - tableSection.offsetTop;
-        const walk = (y - startY) * 2; 
+        const walk = (y - startY) * 2;
         tableSection.scrollTop = scrollTop - walk;
     });
 

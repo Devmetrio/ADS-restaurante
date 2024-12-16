@@ -103,7 +103,7 @@ if (validarBoton($btnOrdenMesa)) {
     $seleccionMesasObject = new seleccionMesas();
     $seleccionMesasObject->seleccionMesaShow();
   }
-} elseif(validarBoton($btnCancelarSelec)){
+} elseif (validarBoton($btnCancelarSelec)) {
   header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexSeleccionMesas.php');
 } elseif (validarBoton($btnIniciarOrden)) {
   $idUsuario = $_SESSION['id'];
@@ -122,7 +122,7 @@ if (validarBoton($btnOrdenMesa)) {
     $ordenMesaObject->ordenMesaShow();
 
     $viewMensajeSistemaObject = new viewMensajeSistema();
-    $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'La lista de la orden esta vacia, ingrese platos a la orden', '/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php');
+    $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'La lista de la orden esta vacia, ingrese platos a la orden', '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');
   } else {
     $controlPedidosObject = new controlPedidos();
     $controlPedidosObject->enviarOrden($comanda, $idControl, $idMesa);
@@ -134,4 +134,3 @@ if (validarBoton($btnOrdenMesa)) {
   $viewMensajeSistemaObject = new viewMensajeSistema();
   $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'No se puede concretar la accion', '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');
 }
-?>

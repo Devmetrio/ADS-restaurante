@@ -200,7 +200,7 @@ class panelOrdenes
                         <button>Regresar a panel</button>
                     </a>
                     <?php if ($ordenDetalles): ?>
-                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?= $ordenDetalles[0]['idOrden'] ?>&idMesa=<?= $ordenDetalles[0]['Mesa'] ?>&idControlMesa=<?=$ordenDetalles[0]['idControlOrden'] ?>" >
+                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?= $ordenDetalles[0]['idOrden'] ?>&idMesa=<?= $ordenDetalles[0]['Mesa'] ?>&idControl=<?=$ordenDetalles[0]['idControlOrden'] ?>" >
                             <button>Aumentar orden</button>
                         </a>
                     <?php endif ?>

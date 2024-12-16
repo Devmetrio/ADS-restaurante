@@ -53,17 +53,27 @@ class OrdenDetalle extends conexion
             throw new Exception("No se encontraron valores válidos para insertar.");
         }
 
-        $sql = "INSERT INTO OrdenDetalles (idItem, cantidad, idOrden, subtotal) VALUES " . implode(", ", $values);
+        // Modificar la consulta para manejar duplicados
+        $sql = "
+            INSERT INTO OrdenDetalles (idItem, cantidad, idOrden, subtotal) 
+            VALUES " . implode(", ", $values) . "
+            ON DUPLICATE KEY UPDATE 
+                cantidad = cantidad + VALUES(cantidad),
+                subtotal = subtotal + VALUES(subtotal)
+        ";
+
         $respuesta = $this->conectar()->query($sql);
         if (!$respuesta) {
-            throw new Exception("Error al insertar en OrdenDetalles: " . $this->conectar()->error);
+            throw new Exception("Error al insertar o actualizar en OrdenDetalles: " . $this->conectar()->error);
         }
 
         $this->desconectar();
         return $respuesta;
     }
 
-    public function obtenerOrdenPorId($id){
+
+    public function obtenerOrdenPorId($id)
+    {
         $this->conectar();
         $sql = "SELECT mi.nombre AS NombrePlato,mi.descripcion AS Descripcion, od.subtotal AS Subtotal, od.cantidad AS Cantidad, 
                 co.idMesa AS Mesa FROM OrdenDetalles od 
@@ -71,7 +81,9 @@ class OrdenDetalle extends conexion
                 INNER JOIN    ControlOrdenes co ON co.idOrden = o.idOrden
                 INNER JOIN    MenuItems mi ON od.idItem = mi.idItem WHERE od.idOrden = $id";
         $respuesta = $this->conectar()->query($sql);
-       
+
         return $respuesta->fetch_all(MYSQLI_ASSOC);
     }
 }
+    
+

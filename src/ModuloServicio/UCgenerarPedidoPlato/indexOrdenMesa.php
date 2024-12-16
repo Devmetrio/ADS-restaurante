@@ -25,6 +25,5 @@ if ($idOrden != null) {
 $categoriaObject = new Categoria();
 $categoria = $categoriaObject->obtenerCategoria();
 
-
 $ordenMesaObject = new ordenMesa();
 $ordenMesaObject->ordenMesaShow($categoria, $menu, $idControl, $idMesa, $ordenArray, $idOrden);

@@ -4,7 +4,7 @@ class Conexion
     private $host = "localhost";
     private $user = "root";
     private $password = "12345678";
-    private $database = "restaurantedb";
+    private $database = "bdrestaurante";
     private $conexion;
 
     public function conectar()

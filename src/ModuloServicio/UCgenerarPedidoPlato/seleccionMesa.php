@@ -165,7 +165,7 @@ class seleccionMesas
             };
 
             conn.onmessage = function(event) {
-                console.log("Datos recibidos del servidor:", event.data);
+                console.log("Datos recibidos del servidor:");
 
                 if (event.data === "Cambiando estados") {
                     conn.send('Obtener mesas');
@@ -211,13 +211,13 @@ class seleccionMesas
                     button.appendChild(mesaInfo);
 
                     // Estilo según el estado
-                    if (mesa.idMesaEstado === 1) {
+                    if (mesa.idMesaEstado == 1) {
                         button.classList.add('libre');
                         button.value = 0;
-                    } else if (mesa.idMesaEstado === 2) {
+                    } else if (mesa.idMesaEstado == 2) {
                         button.classList.add('espera');
                         button.value = 1;
-                    } else if (mesa.idMesaEstado === 3) {
+                    } else if (mesa.idMesaEstado == 3) {
                         button.value = 0;
                         button.classList.add('ocupado');
                     }
