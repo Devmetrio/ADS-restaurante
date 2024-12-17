@@ -18,6 +18,9 @@ class controlPedidos
         $respuesta = $controlOrdenObject->insertarControlOrden($idMesa, $idUsuario, $fechaActual, $horaActual);
 
         if ($respuesta) {
+            $mesaObject = new Mesa();
+            $mesaObject->actualizarEstadoSalon($idMesa, 3);
+
             header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?idControl=' . $respuesta. '&idMesa='. $idMesa);
         } else {
             $panelOrdenesObject = new panelOrdenes();
@@ -45,9 +48,6 @@ class controlPedidos
         $respuesta = $ordenDetalleObject->insertarOrdenDetalle($comanda, $idOrden);
 
         if ($respuesta != null) {
-            $mesaObject = new Mesa();
-            $mesaObject->actualizarEstadoSalon($idMesa, 3);
-
             $panelOrdenesObject = new panelOrdenes();
             $panelOrdenesObject->panelOrdenesShow();
 

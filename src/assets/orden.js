@@ -109,6 +109,10 @@ function limpiarComanda() {
     actualizarTabla();           // Actualizar la tabla para reflejar el cambio
 }
 
+function regresarApanel(){
+    limpiarComanda();
+    window.location.href='/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php';
+}
 
 // Cargar la comanda al iniciar
 window.onload = cargarComanda;

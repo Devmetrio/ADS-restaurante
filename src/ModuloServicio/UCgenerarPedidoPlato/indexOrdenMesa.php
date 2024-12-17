@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/ordenMesa.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Categoria.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/MenuItem.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/OrdenDetalle.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/ControlOrden.php');
 
 
 $NumeroCategoria = $_GET['categoria'] ?? null;
@@ -18,8 +18,8 @@ if ($NumeroCategoria != null) {
 }
 
 if ($idOrden != null) {
-    $ordenObject = new OrdenDetalle();
-    $ordenArray = $ordenObject->obtenerOrdenPorId($idOrden);
+    $controlOrdenObject = new ControlOrden();
+    $ordenArray = $controlOrdenObject->obtenerOrdenPorId($idOrden);
 }
 
 $categoriaObject = new Categoria();

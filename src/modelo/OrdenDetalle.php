@@ -70,20 +70,7 @@ class OrdenDetalle extends conexion
         $this->desconectar();
         return $respuesta;
     }
-
-
-    public function obtenerOrdenPorId($id)
-    {
-        $this->conectar();
-        $sql = "SELECT mi.nombre AS NombrePlato,mi.descripcion AS Descripcion, od.subtotal AS Subtotal, od.cantidad AS Cantidad, 
-                co.idMesa AS Mesa FROM OrdenDetalles od 
-                INNER JOIN    Ordenes o ON od.idOrden = o.idOrden 
-                INNER JOIN    ControlOrdenes co ON co.idOrden = o.idOrden
-                INNER JOIN    MenuItems mi ON od.idItem = mi.idItem WHERE od.idOrden = $id";
-        $respuesta = $this->conectar()->query($sql);
-
-        return $respuesta->fetch_all(MYSQLI_ASSOC);
-    }
+    
 }
     
 

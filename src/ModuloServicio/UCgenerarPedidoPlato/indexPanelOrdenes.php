@@ -11,6 +11,7 @@ if (!isset($_SESSION['autenticado'])) {
  
 $idMesa = $_GET['idMesa'] ?? null;
 $ordenDetalles = null;
+$idControl = null;
 
 $controlOrdenObject = new ControlOrden();
 $controlOrdenes = $controlOrdenObject->obtenerOrdenControl();
@@ -18,8 +19,10 @@ $controlOrdenes = $controlOrdenObject->obtenerOrdenControl();
 if($idMesa!= null){
     $ordenDetallesObject = new OrdenDetalle();
     $ordenDetalles = $ordenDetallesObject->obtenerOrdenDetalle($idMesa);
+
+    $idControl = $controlOrdenObject->obtenerIdControlPorMesa($idMesa);
 }
 
 $panelOrdenesObject = new panelOrdenes();
-$panelOrdenesObject->panelOrdenesShow($controlOrdenes, $ordenDetalles, $idMesa);
+$panelOrdenesObject->panelOrdenesShow($controlOrdenes, $ordenDetalles, $idMesa, $idControl);
 ?>

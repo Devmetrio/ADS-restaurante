@@ -4,8 +4,6 @@ class ordenMesa
 {
     function ordenMesaShow($categoria = null, $menu = null, $idControl = null, $idMesa = null, $orden = null, $idOrden = null)
     {
-
-
 ?>
         <!DOCTYPE html>
         <html lang="es">
@@ -41,7 +39,7 @@ class ordenMesa
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if ($orden && count($orden) > 0): ?>
+                                <?php if ($orden): ?>
                                     <?php foreach ($orden as $index => $detalle): ?>
                                         <tr>
                                             <td><?= $index + 1; ?></td>
@@ -101,7 +99,7 @@ class ordenMesa
 
                 <footer class="footer">
                     <button class="action-btn" onclick="limpiarComanda()">Limpiar</button>
-                    <button class="action-btn" onclick="limpiarComanda(); location.href='/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php'">Regresar al panel</button>
+                    <button class="action-btn" onclick="regresarApanel()">Regresar al panel</button>
                     <form action="getPedidos.php" method="POST" onsubmit="prepararComanda()">
                         <input type="hidden" value="<?= $idControl ?>" name="idControl">
                         <input type="hidden" id="comandaInput" name="comanda">

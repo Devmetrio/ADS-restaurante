@@ -1,7 +1,7 @@
 <?php
 class panelOrdenes
 {
-    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null)
+    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null)
     {
 ?>
         <!DOCTYPE html>
@@ -140,7 +140,7 @@ class panelOrdenes
 
         <body>
             <div class="container">
-                <h1>Control de Mesas</h1>
+                <h1>Panel de ordenes</h1>
                 <div class="mesas-container">
                     <!-- Lista de Mesas -->
                     <div class="mesas-list">
@@ -199,9 +199,9 @@ class panelOrdenes
                     <a href="/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
                         <button>Regresar a panel</button>
                     </a>
-                    <?php if ($ordenDetalles): ?>
-                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?= $ordenDetalles[0]['idOrden'] ?>&idMesa=<?= $ordenDetalles[0]['Mesa'] ?>&idControl=<?=$ordenDetalles[0]['idControlOrden'] ?>" >
-                            <button>Aumentar orden</button>
+                    <?php if ($ordenDetalles || $idMesa): ?>
+                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?=isset($ordenDetalles[0]['idOrden']) ? $ordenDetalles[0]['idOrden']: '' ?>&idMesa=<?=$idMesa?>&idControl=<?=$idControl ?>" >
+                            <button>Completar orden</button>
                         </a>
                     <?php endif ?>
                 </div>

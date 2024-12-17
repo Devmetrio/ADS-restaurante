@@ -19,6 +19,25 @@ class ControlOrden extends conexion
     return $respuesta;
   }
 
+  public function obtenerIdControlPorMesa($idMesa)
+  {
+    $this->conectar();
+    $sql = "SELECT idControlOrden FROM controlordenes WHERE idMesa = '$idMesa' AND estadocontrolorden = true";
+
+    $respuesta = $this->conectar()->query($sql);
+
+    if ($respuesta->num_rows == 0) {
+      $this->desconectar();
+      return null; 
+    }
+
+    $registro = $respuesta->fetch_assoc();
+    $idControl = $registro['idControlOrden'];
+
+    $this->desconectar();
+    return $idControl;
+  }
+
   public function insertarControlOrden($idMesa, $idUsuario, $fecha, $hora)
   {
     $this->conectar();
@@ -56,11 +75,25 @@ class ControlOrden extends conexion
     return $idOrden;
   }
 
-  public function actualizarOrden($idOrden, $idControl){
+  public function actualizarOrden($idOrden, $idControl)
+  {
     $this->conectar();
     $sql = "UPDATE controlordenes SET idOrden = $idOrden WHERE idControlOrden = $idControl;";
     $respuesta = $this->conectar()->query($sql);
 
     $this->desconectar();
+  }
+
+  public function obtenerOrdenPorId($id)
+  {
+    $this->conectar();
+    $sql = "SELECT co.ControlFecha, co.ControlHora, o.OrdenHora, me.nombre AS NombrePlato, me.descripcion AS Descripcion, od.cantidad AS Cantidad, od.subtotal AS Subtotal
+            FROM ControlOrdenes co
+            JOIN Ordenes o ON co.idOrden = o.idOrden
+            JOIN OrdenDetalles od ON o.idOrden = od.idOrden
+            JOIN menuItems me ON me.idItem = od.idItem WHERE o.idOrden = $id;";
+    $respuesta = $this->conectar()->query($sql);
+
+    return $respuesta->fetch_all(MYSQLI_ASSOC);
   }
 }

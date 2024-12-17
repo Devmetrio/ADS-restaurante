@@ -28,7 +28,7 @@ body {
     max-height: 600px; /* Limita la altura máxima */
     overflow: hidden; /* Desactiva la barra de desplazamiento */
     cursor: grab; /* Cambia el cursor para indicar que es arrastrable */
-    user-select: none; /* Deshabilita la selección de texto */
+    /*user-select: none; /* Deshabilita la selección de texto */
 }
 
 .order-table {
