@@ -66,8 +66,8 @@ class Mesa extends conexion
   public function obtenerSecundarias()
   {
     $this->conectar();
-    $sql = "SELECT idMesa FROM mesas WHERE idMesa NOT IN 
-            (SELECT idMesa FROM controlordenes WHERE EstadoControlOrden = 1) AND idMesaEstado = 3;";
+    $sql = "SELECT idMesa FROM mesas WHERE idMesa NOT IN (SELECT idMesa FROM controlordenes WHERE EstadoControlOrden = 1) AND idMesa NOT IN (
+                SELECT idMesa FROM mesasecundarias) AND idMesaEstado = 3;";
     $respuesta = $this->conectar()->query($sql);
 
     // Verificar si se encontró alguna fila

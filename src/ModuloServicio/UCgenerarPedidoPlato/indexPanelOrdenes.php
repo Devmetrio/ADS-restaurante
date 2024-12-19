@@ -16,14 +16,12 @@ $idControl = null;
 
 $controlOrdenObject = new ControlOrden();
 $controlOrdenes = $controlOrdenObject->obtenerOrdenControl($idUsuario);
-
+$arrayMesaSec = null;
 if($idMesa!= null){
     $ordenDetallesObject = new OrdenDetalle();
     $ordenDetalles = $ordenDetallesObject->obtenerOrdenDetalle($idMesa);
 
     $idControl = $controlOrdenObject->obtenerIdControlPorMesa($idMesa);
-    
-    $arrayMesaSec = $controlOrdenObject->obtenerMesaSecundaria($idControl);
 }
 
 $panelOrdenesObject = new panelOrdenes();
