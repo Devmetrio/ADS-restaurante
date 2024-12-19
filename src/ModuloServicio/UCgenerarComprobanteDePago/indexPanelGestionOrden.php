@@ -1,5 +1,5 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/panelOrdenes.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarComprobanteDePago/panelGestionOrden.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/ControlOrden.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/OrdenDetalle.php');
 session_start();
@@ -8,15 +8,15 @@ if (!isset($_SESSION['autenticado'])) {
     header('Location: /');
     exit();
   }
- 
+
 $idMesa = $_GET['idMesa'] ?? null;
+$nombreUsuario = $_GET['nombreUsuario'] ?? null;
 $ordenDetalles = null;
-$idUsuario = $_SESSION['id'];
 $idControl = null;
 
 $controlOrdenObject = new ControlOrden();
-$controlOrdenes = $controlOrdenObject->obtenerOrdenControlPorUsuario($idUsuario);
-$arrayMesaSec = null;
+$controlOrdenesActivas = $controlOrdenObject->obtenerOrdenControlActivas();
+
 if($idMesa!= null){
     $ordenDetallesObject = new OrdenDetalle();
     $ordenDetalles = $ordenDetallesObject->obtenerOrdenDetalle($idMesa);
@@ -24,6 +24,6 @@ if($idMesa!= null){
     $idControl = $controlOrdenObject->obtenerIdControlPorMesa($idMesa);
 }
 
-$panelOrdenesObject = new panelOrdenes();
-$panelOrdenesObject->panelOrdenesShow($controlOrdenes, $ordenDetalles, $idMesa, $idControl, $arrayMesaSec);
+$panelGestionOrdenObject = new panelGestionOrden();
+$panelGestionOrdenObject->panelGestionOrdenShow($controlOrdenesActivas, $ordenDetalles, $idMesa, $idControl);
 ?>
