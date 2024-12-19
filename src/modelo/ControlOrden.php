@@ -4,7 +4,7 @@ require_once("conexion.php");
 class ControlOrden extends conexion
 {
   // obtenerControlOrdenPorUsuario
-  public function obtenerOrdenControl($id)
+  public function obtenerOrdenControlPorUsuario($id)
   {
     $this->conectar();
     $sql = "SELECT * FROM controlordenes WHERE estadocontrolorden = true AND idUsuario = $id";
@@ -97,4 +97,24 @@ class ControlOrden extends conexion
 
     return $respuesta->fetch_all(MYSQLI_ASSOC);
   }
-}
+
+    //ControlFecha = CURDATE() AND  |
+    // obtenerControlOrdenActivas
+    public function obtenerOrdenControlActivas()
+    {
+        $this->conectar();
+        $sql = "SELECT * FROM controlordenes WHERE EstadoControlOrden = 1";
+        $respuesta = $this->conectar()->query($sql);
+    
+        if ($respuesta->num_rows == 0) {
+            $this->desconectar();
+            return [];
+        }
+    
+        $resultado = $respuesta->fetch_all(MYSQLI_ASSOC);
+        $this->desconectar();
+        return $resultado;
+    }}
+
+
+

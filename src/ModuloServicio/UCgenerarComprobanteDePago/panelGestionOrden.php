@@ -1,7 +1,7 @@
 <?php
-class panelOrdenes
+class panelGestionOrden
 {
-    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null, $arrayMesaSec = null)
+    public function panelGestionOrdenShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null)
     {
 ?>
         <!DOCTYPE html>
@@ -146,7 +146,7 @@ class panelOrdenes
                     <div class="mesas-list">
                         <h2>MESAS</h2>
                         <?php if ($controlOrdenes): ?>
-                            <form action="getPedidos.php" method="POST">
+                            <form action="getComprobante.php" method="POST">
                                 <?php foreach ($controlOrdenes as $mesa): ?>
                                     <button class="<?= ($mesa['idMesa'] == $idMesa) ? 'selected' : ''; ?>" value=<?= $mesa['idMesa']; ?> name="btnOrdenMesa" type="submit">
                                         Mesa <?php echo $mesa['idMesa']; ?>
@@ -193,15 +193,15 @@ class panelOrdenes
                 </div>
                 <!-- Botón Seleccionar Mesa -->
                 <div class="btn-seleccionar">
-                    <a href="indexSeleccionMesas.php">
-                        <button>Seleccionar mesa</button>
+                    <a href="<<>>">
+                        <button>Transacciones pendientes</button>
                     </a>
-                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
-                        <button>Regresar a panel</button>
+                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/cerrarSesion.php">
+                        <button>Cerrar Sesión</button>
                     </a>
                     <?php if ($ordenDetalles): ?>
                         <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?= $ordenDetalles[0]['idOrden'] ?>&idMesa=<?= $ordenDetalles[0]['Mesa'] ?>&idControlMesa=<?=$ordenDetalles[0]['idControlOrden'] ?>" >
-                            <button>Aumentar orden</button>
+                            <button>Generar Comprobante</button>
                         </a>
                     <?php endif ?>
                 </div>
