@@ -22,4 +22,12 @@ class Orden extends conexion
         $this->desconectar();
         return $ultimoId;
     }
+
+    function actualizarOrden($idOrden, $hora){
+        $this->conectar();
+        $sql = "UPDATE ordenes SET OrdenHora = '$hora' WHERE idOrden = $idOrden;";
+        $respuesta = $this->conectar()->query($sql);
+    
+        $this->desconectar();
+    }
 }

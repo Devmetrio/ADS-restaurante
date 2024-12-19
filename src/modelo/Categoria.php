@@ -7,7 +7,7 @@ class Categoria extends conexion
     public function obtenerCategoria()
     {
         $this->conectar();
-        $sql = "SELECT * FROM categoria";
+        $sql = "SELECT * FROM categorias";
         $respuesta = $this->conectar()->query($sql);
 
         // Verificar si se encontró alguna fila

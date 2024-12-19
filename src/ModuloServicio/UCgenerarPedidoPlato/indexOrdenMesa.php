@@ -11,6 +11,7 @@ $idMesa = $_GET['idMesa'] ?? null;
 $idOrden = $_GET['orden'] ?? null;
 $menu = null;
 $ordenArray = null;
+$arraySec = $_GET['mesasSecundarias'] ?? null;
 
 if ($NumeroCategoria != null) {
     $menuItemsObject = new MenuItem();
@@ -26,4 +27,4 @@ $categoriaObject = new Categoria();
 $categoria = $categoriaObject->obtenerCategoria();
 
 $ordenMesaObject = new ordenMesa();
-$ordenMesaObject->ordenMesaShow($categoria, $menu, $idControl, $idMesa, $ordenArray, $idOrden);
+$ordenMesaObject->ordenMesaShow($categoria, $menu, $idControl, $idMesa, $ordenArray, $idOrden, $arraySec);

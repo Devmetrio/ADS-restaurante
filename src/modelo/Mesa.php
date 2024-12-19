@@ -62,4 +62,21 @@ class Mesa extends conexion
     $this->desconectar();
     return $respuesta;
   }
+
+  public function obtenerSecundarias()
+  {
+    $this->conectar();
+    $sql = "SELECT idMesa FROM mesas WHERE idMesa NOT IN 
+            (SELECT idMesa FROM controlordenes WHERE EstadoControlOrden = 1) AND idMesaEstado = 3;";
+    $respuesta = $this->conectar()->query($sql);
+
+    // Verificar si se encontró alguna fila
+    if ($respuesta->num_rows == 0) {
+      $this->desconectar();
+      return null;
+    }
+
+    $this->desconectar();
+    return $respuesta->fetch_all(MYSQLI_ASSOC);
+  }
 }

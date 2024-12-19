@@ -1,4 +1,5 @@
 <?php
+session_destroy();
 class FormAutenticacionUsuario
 {
     public function formAutenticarUsuarioShow()

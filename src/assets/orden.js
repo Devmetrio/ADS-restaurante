@@ -1,6 +1,21 @@
 // Array para almacenar la comanda
 let comanda = [];
 
+function cambiarCategoria(categoriaId, idControl, idMesa, idOrden) {
+    fetch(`/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?categoria=${categoriaId}&idControl=${idControl}&idMesa=${idMesa}&orden=${idOrden}`)
+        .then(response => response.text())
+        .then(html => {
+            const content = document.getElementById('content'); // Contenedor principal
+            if (content) {
+                content.innerHTML = html; // Reemplaza solo el contenido del contenedor
+                actualizarTabla();
+            } else {
+                console.error("No se encontró el contenedor con id 'content'.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 // Función para cargar la comanda desde localStorage
 function cargarComanda() {
     const data = localStorage.getItem('comanda');

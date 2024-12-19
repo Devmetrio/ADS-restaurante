@@ -3,10 +3,11 @@ require_once("conexion.php");
 
 class ControlOrden extends conexion
 {
-  public function obtenerOrdenControl()
+  // obtenerControlOrdenPorUsuario
+  public function obtenerOrdenControl($id)
   {
     $this->conectar();
-    $sql = "SELECT * FROM controlordenes WHERE estadocontrolorden = true";
+    $sql = "SELECT * FROM controlordenes WHERE estadocontrolorden = true AND idUsuario = $id";
     $respuesta = $this->conectar()->query($sql);
 
     // Verificar si se encontró alguna fila
@@ -28,7 +29,7 @@ class ControlOrden extends conexion
 
     if ($respuesta->num_rows == 0) {
       $this->desconectar();
-      return null; 
+      return null;
     }
 
     $registro = $respuesta->fetch_assoc();

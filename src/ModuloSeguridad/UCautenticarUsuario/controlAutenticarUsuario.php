@@ -40,7 +40,17 @@ class controlAutenticarUsuario
           $_SESSION['rol'] = $objUsuario->obtenerRol($txtLogin);
           $_SESSION['autenticado'] = "SI";
 
-          header('Location: /src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php');
+          if($_SESSION['rol'] == 'administrador'){
+            header('Location: /src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php');
+          } elseif($_SESSION['rol'] == 'anfitrion de bienvenida'){
+            header('Location: /src/ModuloServicio/UCgestionarReserva/indexCalendarioReserva.php');
+          } elseif($_SESSION['rol'] == 'anfitrion de servicio'){
+            header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');
+          } elseif($_SESSION['rol'] == 'cajero'){
+            header('Location: /src/ModuloServicio/UCgenerarComprobanteDePago/indexPanelGestionOrden.php');
+          } else{
+            header('Location: /');
+          }
         }
       }
     }

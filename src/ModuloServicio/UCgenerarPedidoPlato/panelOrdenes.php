@@ -1,7 +1,7 @@
 <?php
 class panelOrdenes
 {
-    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null)
+    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null, $arrayMesaSec = null)
     {
 ?>
         <!DOCTYPE html>
@@ -196,8 +196,8 @@ class panelOrdenes
                     <a href="indexSeleccionMesas.php">
                         <button>Seleccionar mesa</button>
                     </a>
-                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
-                        <button>Regresar a panel</button>
+                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/cerrarSesion.php">
+                        <button>Cerrar Sesion</button>
                     </a>
                     <?php if ($ordenDetalles || $idMesa): ?>
                         <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?=isset($ordenDetalles[0]['idOrden']) ? $ordenDetalles[0]['idOrden']: '' ?>&idMesa=<?=$idMesa?>&idControl=<?=$idControl ?>" >

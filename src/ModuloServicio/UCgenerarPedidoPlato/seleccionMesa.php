@@ -1,7 +1,7 @@
 <?php
 class seleccionMesas
 {
-    public function seleccionMesaShow($id = null)
+    public function seleccionMesaShow($id = null, $array=null)
     {
 ?>
         <!DOCTYPE html>
@@ -146,11 +146,13 @@ class seleccionMesas
                 <form action="getPedidos.php" method="POST">
                     <?php if ($id !== null) : ?>
                         <button class="btn-action" type="submit" value="Cancelar" name="btnCancelarSelec">Cancelar seleccion</button>
-                        <button class="btn-action">Juntar Mesas</button>
+                        <button class="btn-action" type="submit" value="Juntar" name="btnJuntarMesas">Juntar Mesas</button>
                         <button class="btn-action" type="submit" value="Iniciar" name="btnIniciar">Iniciar Orden</button>
+                        <input type="hidden" value="<?=$array?>" name="mesasSecundarias">
                         <input type="hidden" value="<?= $id?>" name="idMesa">
                     <?php endif; ?>
                 </form>
+                <button class="btn-action" onclick="window.location.href='indexPanelOrdenes.php'">Regresar</button>
             </div>
         </body>
         <script>

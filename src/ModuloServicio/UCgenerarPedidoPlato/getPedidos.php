@@ -5,6 +5,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPla
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/seleccionMesa.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/panelNumerico.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/ordenMesa.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/modalJuntarMesa.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeValidacion.php');
 
 // Declaracion de funciones
@@ -18,9 +19,20 @@ function validarAccion($accion)
   return isset($accion);
 }
 
-function redirigirIndexSeleccionMesas($id)
+function redirigirIndexSeleccionMesas($id, $mesasSeleccionadas = [])
 {
-  header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexSeleccionMesas.php?idMesa=' . $id);
+    // Construir la URL base
+    $url = '/src/ModuloServicio/UCgenerarPedidoPlato/indexSeleccionMesas.php?idMesa=' . $id;
+
+    // Agregar mesas secundarias si existen
+    if (!empty($mesasSeleccionadas) && is_array($mesasSeleccionadas)) {
+        $mesasQuery = implode(',', $mesasSeleccionadas);
+        $url .= '&mesasSecundarias=' . $mesasQuery;
+    }
+
+    // Redirigir
+    header('Location: ' . $url);
+    exit;
 }
 
 function redirigirIndexPanelOrdenes()
@@ -30,10 +42,10 @@ function redirigirIndexPanelOrdenes()
 
 function validarCampos($campo)
 {
-  if ($campo !== 0) {
-    return true;
+  if ($campo == 0) {
+    return false;
   }
-  return false;
+  return true;
 }
 
 function validarCantPersonas($cantidad, $capacidad)
@@ -44,13 +56,27 @@ function validarCantPersonas($cantidad, $capacidad)
   return false;
 }
 
+function validarMesaSeleccionada($idMesa) {
+  if ($idMesa ==0){
+    return true;
+  }
+  return false;
+}
+
+function validarMesasSeleccionadas($mesa1, $mesa2, $mesa3) {
+  // Retorna true si al menos uno de los valores no está vacío
+  return !empty($mesa1) || !empty($mesa2) || !empty($mesa3);
+}
+
 // Declaracion de variables 
 $btnOrdenMesa = $_POST['btnOrdenMesa'] ?? null;
 $btnMesaEnviada = $_POST['btnMesaEnviada'] ?? null;
 $btnCancelarSelec = $_POST['btnCancelarSelec'] ?? null;
+$btnJuntarMesas = $_POST['btnJuntarMesas'] ?? null;
 $btnIniciarOrden = $_POST['btnIniciar'] ?? null;
 $btnEnviar = $_POST['btnEnviar'] ?? null;
 $btnOK = $_GET['btnOK'] ?? null;
+$btnAceptarJuntar = $_POST['btnAceptarJuntar'] ?? null;
 $accion = $_GET['opcion'] ?? null;
 
 // Flujo principal
@@ -60,7 +86,8 @@ if (validarBoton($btnOrdenMesa)) {
   $idMesaEnviada = $_POST['idMesa'];
   $valorMesa = $_POST['btnMesaEnviada'];
   $capacidadMesa = $_POST['capacidad'];
-  if ($valorMesa == 0) {
+
+  if (validarMesaSeleccionada($valorMesa)) {
     $seleccionMesasObject = new seleccionMesas();
     $seleccionMesasObject->seleccionMesaShow();
 
@@ -74,11 +101,11 @@ if (validarBoton($btnOrdenMesa)) {
     $panelNumericoObject->panelNumericoShow($capacidadMesa, $idMesaEnviada);
   }
 } elseif ($btnOK) {
-  if (validarCampos($btnOK)) {
-    $cantidadIngresada = $_GET['cantidad'];
-    $capacidadMesa = $_GET['capacidadMesa'];
-    $idMesa = $_GET['id'];
+  $cantidadIngresada = $_GET['cantidad'];
+  $capacidadMesa = $_GET['capacidadMesa'];
+  $idMesa = $_GET['id'];
 
+  if (validarCampos($cantidadIngresada)) {
     if (validarCantPersonas($cantidadIngresada, $capacidadMesa)) {
       redirigirIndexSeleccionMesas($idMesa);
     } else {
@@ -97,6 +124,7 @@ if (validarBoton($btnOrdenMesa)) {
   }
 } elseif (validarAccion($accion)) {
   $idMesa = $_GET['idMesa'];
+
   if ($accion == "aceptar") {
     redirigirIndexSeleccionMesas($idMesa);
   } else {
@@ -105,11 +133,38 @@ if (validarBoton($btnOrdenMesa)) {
   }
 } elseif (validarBoton($btnCancelarSelec)) {
   header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexSeleccionMesas.php');
+} elseif (validarBoton($btnJuntarMesas)) {
+  $idMesa = $_POST['idMesa'];
+  $controlPedidosObject = new controlPedidos();
+  $controlPedidosObject->juntarMesas($idMesa);
+} elseif(validarBoton($btnAceptarJuntar)){
+  $idMesa = $_POST['idMesa'];
+  $mesaSecundaria1 = $_POST['mesaSecundaria1'];
+  $mesaSecundaria2 = $_POST['mesaSecundaria2'];
+  $mesaSecundaria3 = $_POST['mesaSecundaria3'];
+
+  if (validarMesasSeleccionadas($mesaSecundaria1, $mesaSecundaria2, $mesaSecundaria3)) {
+    $mesaPrincipal = $_POST['mesaPrincipal'];
+    $mesasSeleccionadas = [];
+    if (!empty($mesaSecundaria1)) {
+        $mesasSeleccionadas[] = $mesaSecundaria1;
+    }
+    if (!empty($mesaSecundaria2)) {
+        $mesasSeleccionadas[] = $mesaSecundaria2;
+    }
+    if (!empty($mesaSecundaria3)) {
+        $mesasSeleccionadas[] = $mesaSecundaria3;
+    }
+
+    redirigirIndexSeleccionMesas($mesaPrincipal, $mesasSeleccionadas);
+  }
+
 } elseif (validarBoton($btnIniciarOrden)) {
   $idUsuario = $_SESSION['id'];
   $idMesa = $_POST['idMesa'];
+  $mesasSecundarias = $_POST['mesasSecundarias'];
   $controlPedidosObject = new controlPedidos();
-  $controlPedidosObject->iniciarControlOrden($idMesa, $idUsuario);
+  $controlPedidosObject->iniciarControlOrden($idMesa, $idUsuario, $mesasSecundarias);
 } elseif (validarBoton($btnEnviar)) {
   $idControl = $_POST['idControl'];
   $idMesa = $_POST['idMesa'];

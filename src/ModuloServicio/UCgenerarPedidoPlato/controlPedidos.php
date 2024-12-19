@@ -4,14 +4,28 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/ControlOrden.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Orden.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Mesa.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/MesaSecundaria.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/OrdenDetalle.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/panelOrdenes.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/seleccionMesa.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPlato/modalJuntarMesa.php');
 date_default_timezone_set('America/Lima');
 class controlPedidos
 {
-    function iniciarControlOrden($idMesa, $idUsuario)
+    function juntarMesas($idMesa)
     {
+        $mesaObject = new Mesa();
+        $posiblesMesas = $mesaObject->obtenerSecundarias();
 
+        $seleccionMesasObject = new seleccionMesas();
+        $seleccionMesasObject->seleccionMesaShow($idMesa);
+
+        $modalJuntarMesasObject = new modalJuntarMesa();
+        $modalJuntarMesasObject->modalJuntarMesaShow($idMesa, $posiblesMesas);
+    }
+
+    function iniciarControlOrden($idMesa, $idUsuario, $mesasSecundarias = null)
+    {
         $fechaActual = date('Y-m-d'); // Formato: 2024-12-08
         $horaActual = date('H:i:s'); // Formato: 14:30:00
         $controlOrdenObject = new ControlOrden();
@@ -21,7 +35,12 @@ class controlPedidos
             $mesaObject = new Mesa();
             $mesaObject->actualizarEstadoSalon($idMesa, 3);
 
-            header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?idControl=' . $respuesta. '&idMesa='. $idMesa);
+            if ($mesasSecundarias != null) {
+                $mesaSecundariaObject = new MesaSecundaria();
+                $mesaSecundariaObject->insertarMesasSecundarias($respuesta, $mesasSecundarias);
+            }
+
+            header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?idControl=' . $respuesta . '&idMesa=' . $idMesa. '&mesasSecundarias='.$mesasSecundarias);
         } else {
             $panelOrdenesObject = new panelOrdenes();
             $panelOrdenesObject->panelOrdenesShow();
@@ -33,15 +52,18 @@ class controlPedidos
 
     function enviarOrden($comanda, $idControlOrden, $idMesa)
     {
+        $horaActual = date('H:i:s');
         $controlOrdenObject = new ControlOrden();
         $idOrden = $controlOrdenObject->verificarOrden($idControlOrden);
 
         if ($idOrden == null) {
-            $horaActual = date('H:i:s'); 
             $ordenObject = new Orden();
             $idOrden = $ordenObject->crearOrden($horaActual);
 
             $controlOrdenObject->actualizarOrden($idOrden, $idControlOrden);
+        } else {
+            $ordenObject = new Orden();
+            $ordenObject->actualizarOrden($idOrden, $horaActual);
         }
 
         $ordenDetalleObject = new OrdenDetalle();
@@ -53,7 +75,7 @@ class controlPedidos
 
             $viewMensajeSistemaObject = new viewMensajeSistema();
             $viewMensajeSistemaObject->viewMensajeSistemaShow('success', 'Mensaje', '¡Se mando envió la orden a produccion!', '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');
-        } else{
+        } else {
             $panelOrdenesObject = new panelOrdenes();
             $panelOrdenesObject->panelOrdenesShow();
 

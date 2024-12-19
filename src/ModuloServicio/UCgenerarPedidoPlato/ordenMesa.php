@@ -2,7 +2,7 @@
 
 class ordenMesa
 {
-    function ordenMesaShow($categoria = null, $menu = null, $idControl = null, $idMesa = null, $orden = null, $idOrden = null)
+    function ordenMesaShow($categoria = null, $menu = null, $idControl = null, $idMesa = null, $orden = null, $idOrden = null, $arraySec = null)
     {
 ?>
         <!DOCTYPE html>
@@ -26,7 +26,15 @@ class ordenMesa
                 <section class="content">
                     <!-- SECCIÓN DE LA ORDEN DE MESA (Tabla) -->
                     <div class="table-section">
-                        <h2>MESA <?= $idMesa ?></h2>
+                        <?php if (!empty($orden[0]['ControlHora'])): ?>
+                            <h3>Hora iniciada (<?= htmlspecialchars($orden[0]['ControlHora']) ?>) </h3>
+                        <?php endif; ?>
+
+                        <?php if (!empty($orden[0]['OrdenHora'])): ?>
+                            <h3>Ultimo pedido (<?= htmlspecialchars($orden[0]['OrdenHora']) ?>) </h3>
+                        <?php endif; ?>
+                        <h2>MESA PRINCIPAL: <?= $idMesa ?></h2>
+                        <h4>MESA SECUNDARIAS: <?= $arraySec ?></h4>
                         <table class="order-table">
                             <thead>
                                 <tr>
@@ -108,22 +116,6 @@ class ordenMesa
                     </form>
                 </footer>
             </div>
-            <script>
-                function cambiarCategoria(categoriaId, idControl, idMesa, idOrden) {
-                    fetch(`/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?categoria=${categoriaId}&idControl=${idControl}&idMesa=${idMesa}&orden=${idOrden}`)
-                        .then(response => response.text())
-                        .then(html => {
-                            const content = document.getElementById('content'); // Contenedor principal
-                            if (content) {
-                                content.innerHTML = html; // Reemplaza solo el contenido del contenedor
-                                actualizarTabla();
-                            } else {
-                                console.error("No se encontró el contenedor con id 'content'.");
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
-            </script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
         </body>
 
