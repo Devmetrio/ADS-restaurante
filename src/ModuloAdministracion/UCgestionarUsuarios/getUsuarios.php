@@ -30,13 +30,21 @@ function validarDatos($login, $password, $estado, $idRol) {
     // Validar el campo 'login' (debe ser una cadena de texto alfanumérica)
     if (empty($login) || strlen($login) < 4 || strlen($login) > 8) {
         $nombreCampoErroneo = 'login';
+<<<<<<< HEAD
         $mensajeError = 'El campo ' . $nombreCampoErroneo . ' debe tener entre 4 y 8 caracteres.';
+=======
+        $mensajeError = 'El campo ' . $nombreCampoErroneo . ' debe tener entre 4 y 50 caracteres.';
+>>>>>>> 340f8e67142c18455f4145251a83af2e637a1868
         return false;
     }
     // Validar el campo 'password' (debe ser una cadena de texto con al menos 6 caracteres)
     if (empty($password) || strlen($password) > 8) {
         $nombreCampoErroneo = 'password';
+<<<<<<< HEAD
         $mensajeError = 'El campo ' . $nombreCampoErroneo . ' debe tener 8 caracteres.';
+=======
+        $mensajeError = 'El campo ' . $nombreCampoErroneo . ' debe tener al menos 6 caracteres.';
+>>>>>>> 340f8e67142c18455f4145251a83af2e637a1868
         return false;
     }
     // Validar el campo 'estado' (debe ser un entero: 1 o 0)
@@ -87,6 +95,7 @@ if (validarBoton($AgregarAceptar)) {
   $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Acceso denegado', 'Error, no se pudo completar la acción');
 }
 
+<<<<<<< HEAD
 // Verificación del botón de habilitar usuario
 if (validarBoton($btnHabilitar)) {
     $idUsuario = intval($_GET['idUsuario']);
@@ -136,6 +145,10 @@ elseif ($accion === "btnDeshabilitar") {
         $viewMessageSistemaObject->viewMensajeSistemaShow('info', 'Confirmación', 'Se ha cancelado la deshabilitación del usuario');
     }
 }
+=======
+
+
+>>>>>>> 340f8e67142c18455f4145251a83af2e637a1868
 
 ?>
 
