@@ -8,12 +8,14 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgestionarReserva
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgestionarReserva/controlReserva.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgestionarReserva/selecMesaPrin.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgestionarReserva/selecMesaSec.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgestionarReserva/ultimoFormReserva.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php');
 
 // Variables para manejo de errores
 $nombreCampoErroneo = '';
 $mensajeError = '';
 
+// **Funciones**
 // Función para validar si se ha enviado el formulario (botón de seleccionar fecha)
 function validarBoton($boton)
 {
@@ -60,18 +62,46 @@ function validarFormHora($horaReserva)
     return true;
 }
 
-// Obtener parámetros desde la URL o POST
+function validarNombreCliente($nombreCliente)
+{
+    global $mensajeError;
+
+    if (strlen($nombreCliente) < 6) {
+        $mensajeError = 'El nombre debe tener al menos 6 caracteres.';
+        return false;
+    }
+    return true;
+}
+
+function validarNumeroCelular($numeroCelular)
+{
+    global $mensajeError;
+
+    if (!preg_match('/^9\d{8}$/', $numeroCelular)) {
+        $mensajeError = 'El número de celular debe tener 9 dígitos y comenzar con 9.';
+        return false;
+    }
+    return true;
+}
+
+// Inicializar variables
+$idMesaPrincipal = $_POST['idMesaSeleccionada'] ?? $_GET['mesaPrin'] ?? null;
 $fechaSeleccionada = $_POST['fechaSeleccionada'] ?? null;
+$horaReserva = $_POST['horaReserva'] ?? null;
 $btnSeleccionarFecha = $_POST['btnSeleccionarFecha'] ?? null;
 $btnAgregarReserva = $_POST['btnAgregarReserva'] ?? null;
-$horaReserva = $_POST['horaReserva'] ?? null;
-$cantidadPersonas = $_POST['cantidadPersonas'] ?? null;
 $btnHoraCantidad = $_POST['btnHoraCantidad'] ?? null;
 $btnMesaPrincipal = $_POST['btnMesaPrincipal'] ?? null;
 $btnAgregarMesasSecundarias = $_POST['btnAgregarMesasSecundarias'] ?? null;
 $btnConfirmarMesasSecundarias = $_POST['btnConfirmarMesasSecundarias'] ?? null;
+$btnUltimoForm = $_POST['btnUltimoForm'] ?? null;
+$btnGenerarReserva = $_POST['btnGenerarReserva'] ?? null;
 $mesasSecundariasSeleccionadas = $_POST['mesasSecundariasSeleccionadas'] ?? [];
-$noMesasSecundarias = $_POST['noMesasSecundarias'] ?? null;
+
+// Verificar y convertir mesasSecundariasSeleccionadas en array si es necesario
+if (!is_array($mesasSecundariasSeleccionadas)) {
+    $mesasSecundariasSeleccionadas = explode(',', $mesasSecundariasSeleccionadas);
+}
 
 // Instanciar el modelo Mesa y obtener el estado de las mesas
 if ($fechaSeleccionada && $horaReserva) {
@@ -106,21 +136,68 @@ if (validarBoton($btnSeleccionarFecha)) {
         $viewMensageSistemaObject->viewMensajeSistemaShow('error', 'Fecha inválida', $mensajeError);
     }
 } elseif (validarBoton($btnMesaPrincipal)) {
-    $idMesaPrincipal = $_POST['idMesaSeleccionada'];
     header('Location: /src/ModuloServicio/UCgestionarReserva/indexSelecMesaPrin.php?fecha=' . urlencode($fechaSeleccionada) . '&hora=' . urlencode($horaReserva) . '&mesaPrin=' . urlencode($idMesaPrincipal));
     exit();
 } elseif (validarBoton($btnAgregarMesasSecundarias)) {
-    $idMesaPrincipal = $_POST['mesaPrincipal'];
     header('Location: /src/ModuloServicio/UCgestionarReserva/indexSelecMesaPrin.php?fecha=' . urlencode($fechaSeleccionada) . '&hora=' . urlencode($horaReserva) . '&mesaPrin=' . urlencode($idMesaPrincipal) . '&mostrarMesasSecundarias=true');
     exit();
 } elseif (validarBoton($btnConfirmarMesasSecundarias)) {
-    $idMesaPrincipal = $_POST['mesaPrincipal'];
     $controlReservaObject = new controlReserva();
     $controlReservaObject->procesarMesasSecundarias($fechaSeleccionada, $horaReserva, $idMesaPrincipal, $mesasSecundariasSeleccionadas);
 
     // Redirigir de vuelta a selecMesaPrin
-    header('Location: /src/ModuloServicio/UCgestionarReserva/indexSelecMesaPrin.php?fecha=' . urlencode($fechaSeleccionada) . '&hora=' . urlencode($horaReserva) . '&mesaPrin=' . urlencode($idMesaPrincipal));
+    header('Location: /src/ModuloServicio/UCgestionarReserva/indexSelecMesaPrin.php?fecha=' . urlencode($fechaSeleccionada) .
+           '&hora=' . urlencode($horaReserva) .
+           '&mesaPrin=' . urlencode($idMesaPrincipal) .
+           '&mesasSecundarias=' . urlencode(implode(',', $mesasSecundariasSeleccionadas)));
     exit();
+} elseif (validarBoton($btnUltimoForm)) { // Validación de btnUltimoForm
+    if ($idMesaPrincipal) {
+        $mesasSecundarias = implode(',', $mesasSecundariasSeleccionadas);
+        header('Location: /src/ModuloServicio/UCgestionarReserva/indexUltimoFormReserva.php?fecha=' . urlencode($fechaSeleccionada) .
+               '&hora=' . urlencode($horaReserva) .
+               '&mesaPrin=' . urlencode($idMesaPrincipal) .
+               '&mesasSecundarias=' . urlencode($mesasSecundarias));
+        exit();
+    } else {
+        $selecMesaPrinObject = new selecMesaPrin();
+        $selecMesaPrinObject->selecMesaPrinShow($fechaSeleccionada, $horaReserva, $mesa, $idMesaPrincipal, $mesasSecundariasSeleccionadas);
+        $viewMensajeSistemaObject = new viewMensajeSistema();
+        $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Selección incompleta', 'Debe seleccionar una mesa principal antes de continuar.');
+    }
+} elseif (validarBoton($btnGenerarReserva)) {
+    $fecha = $_POST['fecha'] ?? null;
+    $hora = $_POST['hora'] ?? null;
+    $mesaPrincipal = $_POST['mesaPrincipal'] ?? null;
+    $mesasSecundariasSeleccionadas = $_POST['mesasSecundariasSeleccionadas'] ?? null;
+    $cliente = $_POST['cliente'] ?? null;
+    $celular = $_POST['celular'] ?? null;
+    
+    if (validarNombreCliente($cliente) && validarNumeroCelular($celular)) {
+        $controlReservaObject = new controlReserva();
+        $controlReservaObject->generarReservaFinal(
+            $fecha,
+            $hora,
+            $mesaPrincipal,
+            $mesasSecundariasSeleccionadas,
+            $cliente,
+            $celular
+        );
+
+    } else {
+        // Mostrar error si hay datos faltantes
+        $mensajeError = 'Por favor, complete todos los campos correctamente.';
+        $ultimoFormReservaObject = new ultimoFormReserva();
+        $ultimoFormReservaObject->ultimoFormReservaShow(
+            $fechaSeleccionada,
+            $horaReserva,
+            $idMesaPrincipal,
+            explode(',', $mesasSecundariasSeleccionadas)    
+        );
+
+        $viewMensajeSistemaObject = new viewMensajeSistema();
+        $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error en la reserva', $mensajeError);
+    }
 } else {
     $calendarioReservaObject = new calendarioReserva();
     $calendarioReservaObject->calendarioReservaShow();

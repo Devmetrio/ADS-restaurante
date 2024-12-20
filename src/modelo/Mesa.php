@@ -143,24 +143,40 @@ class Mesa extends conexion
 {
     $this->conectar();
 
-    // Construcción dinámica de la consulta
+    // Construcción dinámica de la condición para excluir mesa principal
     $mesaPrincipalCondition = '';
     if (!empty($mesaPrincipal) && is_numeric($mesaPrincipal)) {
         $mesaPrincipalCondition = "AND m.idMesa != $mesaPrincipal";
     }
 
-    $sql = "SELECT
-                m.idMesa,
-                m.capacidad
+    // Query ajustado para incluir EstadoReserva y filtrar solo "Libre"
+    $sql = "SELECT 
+                m.idMesa, 
+                m.capacidad, 
+                m.idSeccion, 
+                m.idMesaEstado, 
+                m.estadoTecnico,
+                IF(r.idReserva IS NOT NULL OR msr.idReserva IS NOT NULL, 'Ocupada', 'Libre') AS EstadoReserva
             FROM mesas m
-            LEFT JOIN reservas r
+            LEFT JOIN reservas r 
                 ON m.idMesa = r.idMesa
                 AND r.fechaReserva = '$fecha'
-                AND r.horaReserva BETWEEN SUBTIME('$hora', '02:00:00')
+                AND r.horaReserva BETWEEN SUBTIME('$hora', '02:00:00') 
                                       AND ADDTIME('$hora', '02:00:00')
-            WHERE r.idReserva IS NULL
-              $mesaPrincipalCondition"; // Excluir mesa principal si está definida
-             
+            LEFT JOIN mesasecundariareservas msr
+                ON m.idMesa = msr.idMesa
+                AND msr.idReserva IN (
+                    SELECT idReserva
+                    FROM reservas
+                    WHERE fechaReserva = '$fecha'
+                      AND horaReserva BETWEEN SUBTIME('$hora', '02:00:00') 
+                                          AND ADDTIME('$hora', '02:00:00')
+                )
+            WHERE (r.idReserva IS NULL AND msr.idReserva IS NULL) 
+              $mesaPrincipalCondition
+            ORDER BY m.idMesa
+            LIMIT 0, 1000;";
+
     $respuesta = $this->conectar()->query($sql);
 
     if (!$respuesta) {

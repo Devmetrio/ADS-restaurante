@@ -119,7 +119,7 @@ class selecMesaPrin
                                     data-id="<?= $fila['idMesa'] ?>"
                                     <?= $fila['EstadoReserva'] === 'Ocupada' ? 'disabled' : '' ?>>
                                 Mesa <?= $fila['idMesa'] ?>
-                            </button>
+                                </button>
                             <?php endwhile; ?>
                         <?php endif; ?>
                     </div>
@@ -129,7 +129,6 @@ class selecMesaPrin
                     <input type="hidden" name="mesasSecundariasSeleccionadas" id="mesasSecundariasSeleccionadas" value="<?= implode(',', $mesasSecundariasSeleccionadas) ?>">
 
                     <div class="buttons">
-                        <!-- Botón para agregar mesas secundarias -->
                         <button type="button" 
                                 id="btnAgregarMesasSecundarias" 
                                 onclick="window.location.href='?fecha=<?= $fechaSeleccionada ?>&hora=<?= $horaReserva ?>&mesaPrin=<?= $mesaPrincipalSeleccionada ?>&mostrarMesasSecundarias=true&mesasSecundariasSeleccionadas=' + encodeURIComponent(document.getElementById('mesasSecundariasSeleccionadas').value);" 
@@ -137,11 +136,9 @@ class selecMesaPrin
                                 style="display: <?= $mesaPrincipalSeleccionada ? 'inline-block' : 'none' ?>;">
                             Agregar mesas secundarias
                         </button>
-                        <!-- Botón cancelar operación -->
                         <button type="button" onclick="window.location.href='/src/ModuloServicio/UCgestionarReserva/indexGestionarReserva.php?fecha=<?= $fechaSeleccionada ?>';" class="action-btn">
                             Cancelar operación
                         </button>
-                        <!-- Botón continuar -->
                         <button type="submit" name="btnUltimoForm" class="action-btn <?= !$mesaPrincipalSeleccionada ? 'disabled' : '' ?>" <?= !$mesaPrincipalSeleccionada ? 'disabled' : '' ?>>
                             Continuar
                         </button>
@@ -152,26 +149,12 @@ class selecMesaPrin
                 const buttons = document.querySelectorAll('.mesa-btn.libre');
                 const btnAgregarMesasSecundarias = document.getElementById('btnAgregarMesasSecundarias');
                 const inputMesa = document.getElementById('mesaSeleccionada');
-                const mesasSecundariasInput = document.getElementById('mesasSecundariasSeleccionadas');
-
                 buttons.forEach(button => {
                     button.addEventListener('click', () => {
-                        // Quitar la clase 'seleccionada' de todas las mesas
                         document.querySelectorAll('.mesa-btn').forEach(btn => btn.classList.remove('seleccionada'));
-                        // Añadir la clase 'seleccionada' a la mesa actual
                         button.classList.add('seleccionada');
-                        // Actualizar el valor del campo oculto
                         inputMesa.value = button.getAttribute('data-id');
-                        // Mostrar el botón "Agregar mesas secundarias"
                         btnAgregarMesasSecundarias.style.display = 'inline-block';
-                    });
-                });
-
-                // Actualizar mesas secundarias seleccionadas
-                document.querySelectorAll('select[multiple]').forEach(select => {
-                    select.addEventListener('change', () => {
-                        const selected = Array.from(select.selectedOptions).map(option => option.value);
-                        mesasSecundariasInput.value = selected.join(',');
                     });
                 });
             </script>

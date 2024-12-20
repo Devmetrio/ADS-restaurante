@@ -18,7 +18,7 @@ class selecMesaSec
                     <input type="hidden" name="mesasSecundariasSeleccionadas" id="mesasSeleccionadasInput">
                     <input type="hidden" name="fechaSeleccionada" value="<?= $fechaSeleccionada ?>">
                     <input type="hidden" name="horaReserva" value="<?= $horaReserva ?>">
-                    <input type="hidden" name="mesaPrincipal" value="<?= $mesaPrincipal ?>">
+                    <input type="hidden" name="idMesaSeleccionada" value="<?= $mesaPrincipal ?>"> <!-- Mantener mesa principal seleccionada -->
                     <div style="margin-top: 20px;">
                         <button type="submit" name="btnConfirmarMesasSecundarias" class="action-btn">Confirmar</button>
                         <button type="button" onclick="document.getElementById('modalMesasSecundarias').style.display='none';" class="action-btn">Cancelar</button>
@@ -26,7 +26,6 @@ class selecMesaSec
                 </form>
             </div>
         </div>
-
         <style>
             .mesas-container {
                 display: flex;
@@ -63,7 +62,6 @@ class selecMesaSec
                 background-color: #0056b3;
             }
         </style>
-
         <script>
             const mesas = document.querySelectorAll('.mesa-item');
             const mesasSeleccionadasInput = document.getElementById('mesasSeleccionadasInput');
@@ -85,7 +83,6 @@ class selecMesaSec
 
                     // Actualizar input oculto
                     mesasSeleccionadasInput.value = mesasSeleccionadas.join(',');
-                    console.log('Mesas seleccionadas:', mesasSeleccionadas); // Depuración
                 });
             });
         </script>
