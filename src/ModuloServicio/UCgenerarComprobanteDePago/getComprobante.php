@@ -1,0 +1,63 @@
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarComprobanteDePago/controlComprobante.php');
+session_start();
+
+
+// Declaracion de funciones
+function validarBoton($boton)
+{
+  return isset($boton);
+}
+
+function validarAccion($accion)
+{
+  return isset($accion);
+}
+
+function redirigirIndexPanelGestionOrden()
+{
+  header('Location: /src/ModuloServicio/UCgenerarComprobanteDePago/indexPanelGestionOrden.php?idMesa=' .  $_POST['btnOrdenMesa']);
+}
+
+function validarCampos($campo)
+{
+  if ($campo == 0) {
+    return false;
+  }
+  return true;
+}
+
+$btnOrdenMesa = $_POST['btnOrdenMesa'] ?? null;
+$login = $_POST['login'] ?? null;
+$btnTransacciones = $_POST['btnTransacciones'] ?? null;
+$btnComprobantes = $_POST['btnComprobantes'] ?? null;
+$btnRegresarAlPanel = $_POST['btnRegresarAlPanel'] ?? null;
+
+if (validarBoton($btnOrdenMesa)) {
+    redirigirIndexPanelGestionOrden();
+  }
+if (validarBoton($btnComprobantes)) {
+
+  $idMesa = $_POST['idMesa'];
+  $controlComprobanteObject = new controlComprobante();
+  $controlComprobanteObject->desactivarEstadoControlOrden($idMesa);
+  } else {
+    echo "No se aproetó el boton comprobantes";
+  }
+
+  if (validarBoton($btnTransacciones)) {
+    echo "Transacciones pendientes<br>";
+    $controlComprobanteObject = new controlComprobante();
+    $controlComprobanteObject->obtenerComprobantesFaltosPago();
+    } else {
+      echo "No se apretó botón transacciones <br>";
+    }
+
+  if (validarBoton($btnRegresarAlPanel)) {
+    echo "Regresar al panel<br>";
+    $idMesa = $_POST['idMesa'];
+    $controlComprobanteObject = new controlComprobante();
+    $controlComprobanteObject->activarEstadoControlOrden($idMesa);
+    } else {
+      echo "No se apretó botón regresar al panel <br>";
+    }

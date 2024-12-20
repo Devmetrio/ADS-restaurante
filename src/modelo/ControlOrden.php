@@ -4,7 +4,7 @@ require_once("conexion.php");
 class ControlOrden extends conexion
 {
   // obtenerControlOrdenPorUsuario
-  public function obtenerOrdenControl($id)
+  public function obtenerOrdenControlPorUsuario($id)
   {
     $this->conectar();
     $sql = "SELECT * FROM controlordenes WHERE estadocontrolorden = true AND idUsuario = $id";
@@ -96,5 +96,55 @@ class ControlOrden extends conexion
     $respuesta = $this->conectar()->query($sql);
 
     return $respuesta->fetch_all(MYSQLI_ASSOC);
+  }
+
+  //ControlFecha = CURDATE() AND  |
+  // obtenerControlOrdenActivas
+  public function obtenerOrdenControlActivas()
+  {
+    $this->conectar();
+    $sql = "SELECT co.idMesa, u.login FROM controlordenes co 
+            JOIN usuarios u ON co.idUsuario = u.idUsuario 
+            WHERE co.EstadoControlOrden = 1;";
+    $respuesta = $this->conectar()->query($sql);
+
+    if ($respuesta->num_rows == 0) {
+      $this->desconectar();
+      return [];
+    }
+
+    $resultado = $respuesta->fetch_all(MYSQLI_ASSOC);
+    $this->desconectar();
+    return $resultado;
+  }
+
+  public function actualizarEstadoControlOrdenPorMesa($idMesa, $EstadoControlOrden)
+  {
+    $this->conectar();
+    $sql = "UPDATE controlordenes SET EstadoControlOrden = $EstadoControlOrden WHERE idMesa = $idMesa;";
+    $respuesta = $this->conectar()->query($sql);
+    $this->desconectar();
+    return $respuesta;
+  }
+  
+  
+  public function obtenerOrdenControlFaltosPago()
+  {
+    $this->conectar();
+    $sql = "SELECT co.idMesa, u.login
+            FROM ControlOrdenes co
+            LEFT JOIN Boletas b ON co.idControlOrden = b.idControlOrden
+            LEFT JOIN Facturas f ON co.idControlOrden = f.idControlOrden
+            JOIN usuarios u ON co.idUsuario = u.idUsuario 
+            WHERE (b.estadoBoleta = 0 OR f.estadoFactura = 0)";
+    $respuesta = $this->conectar()->query($sql);
+
+    if ($respuesta->num_rows == 0) {
+      $this->desconectar();
+      return [];
+    }
+    $resultado = $respuesta->fetch_all(MYSQLI_ASSOC);
+    $this->desconectar();
+    return $resultado;
   }
 }

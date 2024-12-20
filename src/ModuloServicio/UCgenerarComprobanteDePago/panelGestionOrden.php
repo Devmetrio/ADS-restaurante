@@ -1,7 +1,7 @@
 <?php
-class panelOrdenes
+class panelGestionOrden
 {
-    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null, $arrayMesaSec = null)
+    public function panelGestionOrdenShow($controlOrdenesActivas = null, $ordenDetalles = null, $idMesa = null, $idControl = null)
     {
 ?>
         <!DOCTYPE html>
@@ -140,27 +140,31 @@ class panelOrdenes
 
         <body>
             <div class="container">
-                <h1>Control de Mesas</h1>
+                <h1>GESTIÓN DE ÓRDENES</h1>
                 <div class="mesas-container">
                     <!-- Lista de Mesas -->
                     <div class="mesas-list">
-                        <h2>MESAS</h2>
-                        <?php if ($controlOrdenes): ?>
-                            <form action="getPedidos.php" method="POST">
-                                <?php foreach ($controlOrdenes as $mesa): ?>
-                                    <button class="<?= ($mesa['idMesa'] == $idMesa) ? 'selected' : ''; ?>" value=<?= $mesa['idMesa']; ?> name="btnOrdenMesa" type="submit">
-                                        Mesa <?php echo $mesa['idMesa']; ?>
+                        <h2>MESAS ACTIVAS</h2>
+                        <?php if ($controlOrdenesActivas): ?>
+                            <form action="getComprobante.php" method="POST">
+                                <?php foreach ($controlOrdenesActivas as $mesa): ?>
+                                    <input type="hidden" name="login" value="<?= htmlspecialchars($mesa['login']); ?>">
+                                    <button class="<?= ($mesa['idMesa'] == $idMesa) ? 'selected' : ''; ?>" value="<?= $mesa['idMesa']; ?>" name="btnOrdenMesa" type="submit">
+                                        Mesa <?php echo $mesa['idMesa']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= htmlspecialchars($mesa['login']); ?>
                                     </button>
                                 <?php endforeach; ?>
+
                             </form>
 
                         <?php else: ?>
                             <p>Cargando...</p>
                         <?php endif; ?>
+
                     </div>
+
                     <!-- Detalles de la Orden -->
                     <div class="detalles">
-                        <h2>Detalles</h2>
+                        <h2>Detalles de la orden</h2>
                         <?php if ($ordenDetalles): ?>
                             <table>
                                 <thead>
@@ -173,17 +177,27 @@ class panelOrdenes
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($ordenDetalles as $index => $detalle): ?>
+                                    <?php
+                                    $total = 0; // Inicializa el total
+                                    foreach ($ordenDetalles as $index => $detalle):
+                                        $total += (float)$detalle['Subtotal']; // Acumula el subtotal
+                                    ?>
                                         <tr>
                                             <td style="text-align: center;"><?= $index + 1; ?></td>
                                             <td style="width: 20%;"><?= htmlspecialchars($detalle['NombrePlato']); ?></td>
                                             <td><?= htmlspecialchars($detalle['Descripcion']); ?></td>
                                             <td style="text-align: center;"><?= (int)$detalle['Cantidad']; ?></td>
-                                            <td style="width: 15%;">s/ <?= number_format((float)$detalle['Subtotal'], 2); ?></td>
+                                            <td style="width: 15%;">S/. <?= number_format((float)$detalle['Subtotal'], 2); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
-                            </table>    
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right; font-weight: bold;">Total:</td>
+                                        <td style="text-align: left; font-weight: bold;">S/. <?= number_format($total, 2); ?></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         <?php elseif ($idMesa): ?>
                             <p>Se ha iniciado el proceso de orden de esta mesa</p>
                         <?php else: ?>
@@ -193,18 +207,25 @@ class panelOrdenes
                 </div>
                 <!-- Botón Seleccionar Mesa -->
                 <div class="btn-seleccionar">
-                    <a href="indexSeleccionMesas.php">
-                        <button>Seleccionar mesa</button>
-                    </a>
-                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php">
-                        <button>Regresar a panel</button>
-                    </a>
+                    <form action="/src/ModuloServicio/UCgenerarComprobanteDePago/getComprobante.php" method = "POST">
+                    <button name="btnTransacciones" type="submit">Transacciones pendientes</button>
+                    </form>
+
                     <?php if ($ordenDetalles): ?>
-                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?= $ordenDetalles[0]['idOrden'] ?>&idMesa=<?= $ordenDetalles[0]['Mesa'] ?>&idControlMesa=<?=$ordenDetalles[0]['idControlOrden'] ?>" >
-                            <button>Aumentar orden</button>
-                        </a>
+                        
+
+                        <form action="/src/ModuloServicio/UCgenerarComprobanteDePago/getComprobante.php" method="POST">
+                            <input type="hidden" name="idMesa" value="<?php echo $idMesa; ?>">
+                            <button type="submit" name="btnComprobantes">Generar Comprobante</button>
+                        </form>
                     <?php endif ?>
+                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/cerrarSesion.php">
+                        <button style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 14px; cursor: pointer; border-radius: 5px;">
+                            Cerrar Sesión
+                        </button>
+                    </a>
                 </div>
+
             </div>
 
             <script>
