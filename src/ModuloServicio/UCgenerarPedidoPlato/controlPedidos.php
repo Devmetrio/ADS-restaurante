@@ -1,8 +1,8 @@
 <?php
-
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/ControlOrden.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Orden.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/ControlOrden.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Mesa.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/MesaSecundaria.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/OrdenDetalle.php');
@@ -12,16 +12,36 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPla
 date_default_timezone_set('America/Lima');
 class controlPedidos
 {
+    function mostrarOrdenDetalles($idMesa)
+    {
+        $idUsuario = $_SESSION['id'];
+        $controlOrdenObject = new ControlOrden();
+        $controlOrdenes = $controlOrdenObject->obtenerOrdenControlPorUsuario($idUsuario);
+        $idControl = $controlOrdenObject->obtenerIdControlPorMesa($idMesa);
+
+        $ordenDetallesObject = new OrdenDetalle();
+        $ordenDetalles = $ordenDetallesObject->obtenerOrdenDetalle($idControl);
+
+        $panelOrdenesObject = new panelOrdenes();
+        $panelOrdenesObject->panelOrdenesShow($controlOrdenes, $ordenDetalles, $idMesa, $idControl);
+    }
+    
     function juntarMesas($idMesa)
     {
         $mesaObject = new Mesa();
         $posiblesMesas = $mesaObject->obtenerSecundarias();
-
         $seleccionMesasObject = new seleccionMesas();
-        $seleccionMesasObject->seleccionMesaShow($idMesa);
 
-        $modalJuntarMesasObject = new modalJuntarMesa();
-        $modalJuntarMesasObject->modalJuntarMesaShow($idMesa, $posiblesMesas);
+        if ($posiblesMesas != null) {
+            $seleccionMesasObject->seleccionMesaShow($idMesa);
+
+            $modalJuntarMesasObject = new modalJuntarMesa();
+            $modalJuntarMesasObject->modalJuntarMesaShow($idMesa, $posiblesMesas);
+        } else {
+            $seleccionMesasObject->seleccionMesaShow($idMesa);
+            $viewMensajeSistemaObject = new viewMensajeSistema();
+            $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'No se pudo encontrar mesas disponibles para juntar');
+        }
     }
 
     function iniciarControlOrden($idMesa, $idUsuario, $mesasSecundarias = null)
@@ -40,7 +60,7 @@ class controlPedidos
                 $mesaSecundariaObject->insertarMesasSecundarias($respuesta, $mesasSecundarias);
             }
 
-            header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?idControl=' . $respuesta . '&idMesa=' . $idMesa. '&mesasSecundarias='.$mesasSecundarias);
+            header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?idControl=' . $respuesta . '&idMesa=' . $idMesa . '&mesasSecundarias=' . $mesasSecundarias);
         } else {
             $panelOrdenesObject = new panelOrdenes();
             $panelOrdenesObject->panelOrdenesShow();

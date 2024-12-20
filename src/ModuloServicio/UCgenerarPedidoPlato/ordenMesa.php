@@ -26,15 +26,19 @@ class ordenMesa
                 <section class="content">
                     <!-- SECCIÓN DE LA ORDEN DE MESA (Tabla) -->
                     <div class="table-section">
-                        <?php if (!empty($orden[0]['ControlHora'])): ?>
-                            <h3>Hora iniciada (<?= htmlspecialchars($orden[0]['ControlHora']) ?>) </h3>
-                        <?php endif; ?>
+                        <div class="inline-header">
+                            <?php if (!empty($orden[0]['ControlHora'])): ?>
+                                <h3>Hora iniciada (<?= htmlspecialchars($orden[0]['ControlHora']) ?>)</h3>
+                            <?php endif; ?>
 
-                        <?php if (!empty($orden[0]['OrdenHora'])): ?>
-                            <h3>Ultimo pedido (<?= htmlspecialchars($orden[0]['OrdenHora']) ?>) </h3>
-                        <?php endif; ?>
+                            <?php if (!empty($orden[0]['OrdenHora'])): ?>
+                                <h3>Último pedido (<?= htmlspecialchars($orden[0]['OrdenHora']) ?>)</h3>
+                            <?php endif; ?>
+                        </div>
                         <h2>MESA PRINCIPAL: <?= $idMesa ?></h2>
+                        <?php if ($arraySec != null): ?>
                         <h4>MESA SECUNDARIAS: <?= $arraySec ?></h4>
+                        <?php endif; ?>
                         <table class="order-table">
                             <thead>
                                 <tr>
@@ -43,6 +47,7 @@ class ordenMesa
                                     <th>Descripción</th>
                                     <th>Subtotal</th>
                                     <th>Cantidad</th>
+                                    <th>E</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
@@ -53,9 +58,10 @@ class ordenMesa
                                             <td><?= $index + 1; ?></td>
                                             <td><?= htmlspecialchars($detalle['NombrePlato']); ?></td>
                                             <td><?= htmlspecialchars($detalle['Descripcion']); ?></td>
-                                            <td>s/ <?= number_format((float)$detalle['Subtotal'], 2); ?></td>
+                                            <td>S/ <?= number_format((float)$detalle['Subtotal'], 2); ?></td>
                                             <td style="width: 5%; min-width: 30px;"><?= (int)$detalle['Cantidad']; ?></td>
-                                            <td><button class="delete-btn" disabled></button></td>
+                                            <td>✔</td>
+                                            <td class="noAccion"></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

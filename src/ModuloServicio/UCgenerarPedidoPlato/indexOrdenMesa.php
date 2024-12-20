@@ -3,7 +3,12 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloServicio/UCgenerarPedidoPla
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/Categoria.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/MenuItem.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/modelo/ControlOrden.php');
+session_start();
 
+if (!isset($_SESSION['autenticado']) || $_SESSION['rol'] != 'anfitrion de servicio') {
+    header('Location: /');
+    exit();
+  }
 
 $NumeroCategoria = $_GET['categoria'] ?? null;
 $idControl = $_GET['idControl'] ?? null;
