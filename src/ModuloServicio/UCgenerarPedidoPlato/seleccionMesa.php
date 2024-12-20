@@ -125,9 +125,6 @@ class seleccionMesas
         <body>
             <div class="container">
                 <h1>Selección de Mesas</h1>
-                <?php if ($array !== null) : ?>
-                <h2>Mesas a juntar: <?=$array ?> </h2>
-                <?php endif; ?>
                 <form action="getPedidos.php" method="POST">
                     <input type="hidden" name="idMesa" value="">
                     <input type="hidden" name="capacidad" value="">

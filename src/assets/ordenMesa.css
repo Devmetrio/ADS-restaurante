@@ -3,16 +3,12 @@ body {
     font-family: Arial, sans-serif;
     background-color: #1c1c1c;
     color: white;
-    overflow: hidden;
 }
 
 .container {
     max-width: 1320px;
     margin: 0 auto;
     padding: 20px;
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
 }
 
 .header {
@@ -23,17 +19,27 @@ body {
 .content {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
-    max-height: 85vh;
-    flex: 1;
+    gap: 20px;
+    max-height: 80vh;
 }
 
 .table-section {
     flex: 3;
-    max-height: 600px;
-    overflow: hidden; 
-    cursor: grab;
-    user-select: none; 
+    max-height: 600px; /* Limita la altura máxima */
+    overflow: hidden; /* Desactiva la barra de desplazamiento */
+    cursor: grab; /* Cambia el cursor para indicar que es arrastrable */
+    /*user-select: none; /* Deshabilita la selección de texto */
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    overflow: hidden; /* Asegura que la tabla no muestre barras de desplazamiento */
+}
+
+.menu-section {
+    flex: 2;
 }
 
 .order-table {
@@ -50,37 +56,15 @@ body {
 }
 
 .order-table th {
-    background-color: #333; /* Cabecera más profesional */
-    color: white; 
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.order-table td.noAccion {
-    background-color: #555; /* Fondo gris para "noAccion" */
-    color: #bbb; /* Texto tenue */
-}
-
-.order-table td.check-icon {
-    font-size: 18px;
-    color: #4caf50; /* Verde profesional para el check */
-}
-
-.order-table tr:hover {
-    background-color: #444; /* Resaltar fila al pasar el mouse */
+    background-color: #333;
 }
 
 .delete-btn {
-    background-color: #ff4444;
+    background-color: red;
     color: white;
     border: none;
     padding: 5px;
     cursor: pointer;
-    border-radius: 5px;
-}
-
-.delete-btn:hover {
-    background-color: #ff6666;
 }
 
 .categories {
@@ -103,24 +87,29 @@ body {
 
 .category-name {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Espacio entre el nombre y el ícono */
 }
 
 .category-icon {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
+    width: 100%;  /* Ajusta al 100% del contenedor */
+    height: 100%; /* Ajusta al 100% del contenedor */
+    object-fit: contain; /* Mantiene la relación de aspecto y adapta el tamaño */
+    width: 40px; /* Tamaño del ícono */
+    height: 40px; /* Tamaño del ícono */
     display: block;
-    margin: 0 auto;
+    margin: 0 auto; /* Centrar el ícono */
 }
 
 .category-btn {
     flex: 1 1 calc(25% - 20px);
+    /* Ajusta el tamaño para que sean uniformes y responsivos */
     max-width: 200px;
+    /* Límite máximo para evitar botones enormes */
     background-color: #444;
     color: white;
     border: none;
     border-radius: 10px;
+    /* Bordes redondeados */
     padding: 15px;
     text-align: center;
     cursor: pointer;
@@ -130,7 +119,9 @@ body {
 .category-btn:hover {
     background-color: #666;
     transform: scale(1.05);
+    /* Efecto visual al pasar el mouse */
 }
+
 .menu-items {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -168,22 +159,7 @@ body {
 
 .footer {
     text-align: center;
-    padding: 10px 0;
-    color: white;
-    background-color: transparent; 
-    margin-top: auto; 
-    position: relative; 
-}
-
-.inline-header {
-    display: flex; 
-    gap: 20px; 
-    align-items: center; 
-}
-
-.inline-header h3 {
-    margin: 0; 
-    display: inline-block; 
+    margin-top: 20px;
 }
 
 .action-btn {
@@ -193,17 +169,4 @@ body {
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
-}
-
-.action-btn:hover {
-    background-color: #666;
-}
-
-/* Ícono de check para la columna "Estado" */
-.order-table td.check-icon::before {
-    font-weight: bold;
-}
-
-.menu-section {
-    flex: 2;
 }

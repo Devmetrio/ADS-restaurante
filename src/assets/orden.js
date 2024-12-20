@@ -73,7 +73,7 @@ function actualizarTabla() {
     // Tamaño de la comanda actual
     const tamañoComanda = comanda.length;
 
-    if (filasExistentes > 0 && tamañoComanda == 0) {
+    if(filasExistentes >0 && tamañoComanda==0){
         // El índice de inicio será el número de filas en la tabla menos el tamaño de la comanda actual más 1
         indexInicio = filasExistentes - tamañoComanda + 2;
     }
@@ -100,15 +100,12 @@ function actualizarTabla() {
             <td>${indexInicio + index}</td> <!-- Ajustar el índice -->
             <td>${item.nombre}</td>
             <td>${item.descripcion}</td>
-            <td>S/ ${item.subtotal.toFixed(2)}</td>
+            <td>s/ ${item.subtotal.toFixed(2)}</td>
             <td style="width: 5%; min-width: 30px;">${item.cantidad}</td>
-            <td></td>
             <td><button class="delete-btn" onclick="eliminarDeComanda(${item.id})">🗑️</button></td>
         `;
         tbody.appendChild(fila);
     });
-
-    habilitarArrastreTabla();
 }
 
 
@@ -127,59 +124,47 @@ function limpiarComanda() {
     actualizarTabla();           // Actualizar la tabla para reflejar el cambio
 }
 
-function regresarApanel() {
+function regresarApanel(){
     limpiarComanda();
-    window.location.href = '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php';
+    window.location.href='/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php';
 }
 
 // Cargar la comanda al iniciar
 window.onload = cargarComanda;
 
 document.addEventListener("DOMContentLoaded", function () {
-    habilitarArrastreTabla(); // Configurar el arrastre al cargar
-    cargarComanda(); // Cargar los datos iniciales
-});
-
-function habilitarArrastreTabla() {
     let isMouseDown = false;
     let startY;
     let scrollTop;
 
     const tableSection = document.querySelector('.table-section');
 
-    // Verifica si la sección existe (en caso de que sea dinámico)
-    if (!tableSection) return;
-
-    // Remover cualquier evento previo para evitar duplicados
-    tableSection.removeEventListener('mousedown', iniciarArrastre);
-    tableSection.removeEventListener('mousemove', arrastrarContenido);
-    tableSection.removeEventListener('mouseup', finalizarArrastre);
-    tableSection.removeEventListener('mouseleave', finalizarArrastre);
-
-    // Definir funciones de los eventos
-    function iniciarArrastre(e) {
+    // Función para iniciar el arrastre
+    tableSection.addEventListener('mousedown', (e) => {
         isMouseDown = true;
         startY = e.pageY - tableSection.offsetTop;
         scrollTop = tableSection.scrollTop;
         tableSection.style.cursor = 'grabbing';
-    }
+    });
 
-    function arrastrarContenido(e) {
+    // Función para arrastrar el contenido
+    tableSection.addEventListener('mousemove', (e) => {
         if (!isMouseDown) return;
         e.preventDefault();
         const y = e.pageY - tableSection.offsetTop;
         const walk = (y - startY) * 2;
         tableSection.scrollTop = scrollTop - walk;
-    }
+    });
 
-    function finalizarArrastre() {
+    // Función para finalizar el arrastre
+    tableSection.addEventListener('mouseup', () => {
+        isMouseDown = false;
+        tableSection.style.cursor = 'grab'; // Restablece el cursor
+    });
+
+    // Para garantizar que al salir del área del contenedor se detenga el arrastre
+    tableSection.addEventListener('mouseleave', () => {
         isMouseDown = false;
         tableSection.style.cursor = 'grab';
-    }
-
-    // Asignar los eventos a la tabla
-    tableSection.addEventListener('mousedown', iniciarArrastre);
-    tableSection.addEventListener('mousemove', arrastrarContenido);
-    tableSection.addEventListener('mouseup', finalizarArrastre);
-    tableSection.addEventListener('mouseleave', finalizarArrastre);
-}
+    });
+});

@@ -1,7 +1,7 @@
 <?php
 class panelOrdenes
 {
-    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null)
+    public function panelOrdenesShow($controlOrdenes = null, $ordenDetalles = null, $idMesa = null, $idControl = null, $arrayMesaSec = null)
     {
 ?>
         <!DOCTYPE html>
@@ -32,19 +32,18 @@ class panelOrdenes
                     background-color: #292929;
                     border-radius: 10px;
                     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-                    height: 70vh;
+                    height: 60vh;
                 }
 
                 h1 {
                     text-align: center;
                     margin-bottom: 20px;
-                    user-select: none;
                 }
 
                 .mesas-container {
                     display: flex;
                     gap: 20px;
-                    height: 70%;
+                    height: 60%;
                 }
 
                 .mesas-list {
@@ -54,24 +53,16 @@ class panelOrdenes
                     border-radius: 10px;
                     overflow-y: hidden;
                     max-height: 400px;
-                    max-width: 25%;
                     cursor: grab;
                     user-select: none;
+                    /* Deshabilita la selección de texto */
                 }
 
                 .mesas-list button {
-                    display: flex;
-                    flex-direction: column;
-                    /* Alinea elementos en columna (texto arriba, imagen abajo) */
-                    align-items: center;
-                    /* Centra el contenido horizontalmente */
-                    justify-content: center;
-                    /* Centra el contenido verticalmente */
+                    display: block;
                     width: 100%;
-                    /* Ocupa todo el ancho del contenedor */
                     margin-bottom: 10px;
-                    padding: 15px;
-                    /* Añade espacio interno */
+                    padding: 10px;
                     background-color: #444;
                     color: white;
                     border: none;
@@ -90,14 +81,13 @@ class panelOrdenes
                     padding: 10px;
                     border-radius: 5px;
                     overflow-y: hidden;
-                    max-height: 500px;
+                    max-height: 400px;
                     cursor: grab;
                 }
 
                 table {
                     width: 100%;
                     border-collapse: collapse;
-                    user-select: none;
                     user-select: none;
                     /* Deshabilita la selección de texto */
                 }
@@ -145,16 +135,6 @@ class panelOrdenes
                     font-weight: bold;
                     border: 2px solid #1f7a31;
                 }
-
-
-                .mesa-icon {
-                    width: 48px;
-                    /* Tamaño de la imagen */
-                    height: 48px;
-                    /* Tamaño de la imagen */
-                    margin-top: 5px;
-                    /* Espacio entre el texto y la imagen */
-                }
             </style>
         </head>
 
@@ -166,15 +146,13 @@ class panelOrdenes
                     <div class="mesas-list">
                         <h2>MESAS</h2>
                         <?php if ($controlOrdenes): ?>
-                            <?php foreach ($controlOrdenes as $mesa): ?>
-                                <form action="getPedidos.php" method="POST">
+                            <form action="getPedidos.php" method="POST">
+                                <?php foreach ($controlOrdenes as $mesa): ?>
                                     <button class="<?= ($mesa['idMesa'] == $idMesa) ? 'selected' : ''; ?>" value=<?= $mesa['idMesa']; ?> name="btnOrdenMesa" type="submit">
-                                        <span>Mesa <?= $mesa['idMesa']; ?></span>
-                                        <img src="/src/assets/images/mesa1.svg" alt="Mesa <?= $mesa['idMesa']; ?>" class="mesa-icon">
+                                        Mesa <?php echo $mesa['idMesa']; ?>
                                     </button>
-                                    <input type="hidden" value="<?=$mesa['idMesa'] ?>" name="idMesa">
-                                </form>
                                 <?php endforeach; ?>
+                            </form>
 
                         <?php else: ?>
                             <p>Cargando...</p>
@@ -182,7 +160,7 @@ class panelOrdenes
                     </div>
                     <!-- Detalles de la Orden -->
                     <div class="detalles">
-                        <h2>Detalles <?= isset($idMesa) ? 'de mesa ' . $idMesa : '' ?></h2>
+                        <h2>Detalles</h2>
                         <?php if ($ordenDetalles): ?>
                             <table>
                                 <thead>
@@ -191,7 +169,7 @@ class panelOrdenes
                                         <th>Pedido</th>
                                         <th>Descripción</th>
                                         <th>Cantidad</th>
-                                        <th>Subtotal</th>
+                                        <th>Precio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -201,7 +179,7 @@ class panelOrdenes
                                             <td style="width: 20%;"><?= htmlspecialchars($detalle['NombrePlato']); ?></td>
                                             <td><?= htmlspecialchars($detalle['Descripcion']); ?></td>
                                             <td style="text-align: center;"><?= (int)$detalle['Cantidad']; ?></td>
-                                            <td style="width: 15%;">S/ <?= number_format((float)$detalle['Subtotal'], 2); ?></td>
+                                            <td style="width: 15%;">s/ <?= number_format((float)$detalle['Subtotal'], 2); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -215,17 +193,17 @@ class panelOrdenes
                 </div>
                 <!-- Botón Seleccionar Mesa -->
                 <div class="btn-seleccionar">
-                    <form action="getPedidos.php" method="POST">
-                        <button type="submit" name="btnSeleccionarMesa" value="seleccionar">Seleccionar mesa</button>
-                    </form>
+                    <a href="indexSeleccionMesas.php">
+                        <button>Seleccionar mesa</button>
+                    </a>
+                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/cerrarSesion.php">
+                        <button>Cerrar Sesion</button>
+                    </a>
                     <?php if ($ordenDetalles || $idMesa): ?>
-                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?= isset($ordenDetalles[0]['idOrden']) ? $ordenDetalles[0]['idOrden'] : '' ?>&idMesa=<?= $idMesa ?>&idControl=<?= $idControl ?>">
+                        <a href="/src/ModuloServicio/UCgenerarPedidoPlato/indexOrdenMesa.php?orden=<?=isset($ordenDetalles[0]['idOrden']) ? $ordenDetalles[0]['idOrden']: '' ?>&idMesa=<?=$idMesa?>&idControl=<?=$idControl ?>" >
                             <button>Completar orden</button>
                         </a>
-                        <?php endif ?>
-                        <a href="/src/ModuloSeguridad/UCautenticarUsuario/cerrarSesion.php">
-                            <button>Cerrar Sesion</button>
-                        </a>
+                    <?php endif ?>
                 </div>
             </div>
 

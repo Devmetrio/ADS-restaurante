@@ -11,6 +11,7 @@ class seleccionarMesa
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Selección de Mesas</title>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
             <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css" rel="stylesheet">
             <style>
                 body {
@@ -99,56 +100,28 @@ class seleccionarMesa
                     background-color: #FFEB3B;
                 }
 
-                .btn-action {
-                    margin-top: 20px;
-                    padding: 12px 25px;
-                    font-size: 16px;
-                    background-color: #444;
-                    color: #fff;
-                    border: none;
-                    border-radius: 25px;
-                    cursor: pointer;
-                    transition: background-color 0.3s, transform 0.2s;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                }
-
-                .btn-action:hover {
-                    background-color: #666;
-                    transform: translateY(-3px);
-                }
-
-                .btn-action:active {
-                    transform: translateY(1px);
-                }
-
-                .btn-action:focus {
-                    outline: none;
-                    box-shadow: 0 0 0 3px rgba(51, 153, 255, 0.5);
-                }
-
-                .mesa.select {
-                    border: 3px solid #2196F3;
-                    background-color: #1976D2;
-                    color: #fff;
-                }
-
-                /* Estilos para el botón "Ocupar" */
+                /* Estilo para el botón "Ocupar" */
                 .btn-ocupar {
                     background-color: #FF5733;
                     color: white;
                     border: none;
-                    padding: 10px 20px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    border-radius: 30px;
+                    width: 40px; /* Tamaño reducido */
+                    height: 40px; /* Tamaño reducido */
+                    border-radius: 8px; /* Bordes ligeramente redondeados */
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 20px; /* Tamaño del ícono ajustado */
                     cursor: pointer;
                     transition: background-color 0.3s, transform 0.2s;
-                    margin-top: 10px;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                    margin-top: 5px; /* Ajuste para centrar mejor */
                 }
 
                 .btn-ocupar:hover {
                     background-color: #C0392B;
-                    transform: scale(1.05);
+                    transform: scale(1.1);
+                    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
                 }
 
                 .btn-ocupar:active {
@@ -160,32 +133,9 @@ class seleccionarMesa
                     box-shadow: 0 0 0 3px rgba(255, 87, 51, 0.5);
                 }
 
-                /* Estilos para el botón "Regresar" */
-                .btn-regresar {
-                    background-color: #3498DB;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    border-radius: 30px;
-                    cursor: pointer;
-                    transition: background-color 0.3s, transform 0.2s;
-                    margin-top: 20px;
-                }
-
-                .btn-regresar:hover {
-                    background-color: #2980B9;
-                    transform: scale(1.05);
-                }
-
-                .btn-regresar:active {
-                    transform: scale(0.98);
-                }
-
-                .btn-regresar:focus {
-                    outline: none;
-                    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+                /* Ícono */
+                .btn-ocupar i {
+                    font-size: 18px; /* Tamaño del ícono más pequeño */
                 }
             </style>
         </head>
@@ -290,11 +240,15 @@ class seleccionarMesa
                     mesaCapacidad.textContent = `Capacidad: ${mesa.capacidad}`;
                     mesaInfo.appendChild(mesaCapacidad);
 
-                    // Crear un nuevo botón rojo para capturar la ID de la mesa
+                    // Crear un nuevo botón con el ícono de "X"
                     const botonRojo = document.createElement('button');
-                    botonRojo.textContent = 'Ocupar'; // Texto del botón
                     botonRojo.classList.add('btn-ocupar'); // Añadimos el estilo elegante al botón
                     botonRojo.name = 'btncambiarestadoicono'; // Atributo name como lo solicitaste
+
+                    // Añadir el ícono "X" de Font Awesome al botón
+                    const iconoX = document.createElement('i');
+                    iconoX.classList.add('fas', 'fa-times'); // "fas" es el estilo para íconos sólidos, y "fa-times" es la clase para el ícono de la "X"
+                    botonRojo.appendChild(iconoX);
 
                     // Agregar evento al botón rojo
                     botonRojo.addEventListener('click', (event) => {
@@ -340,3 +294,4 @@ class seleccionarMesa
 <?php
     }
 }
+?>
