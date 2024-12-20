@@ -5,7 +5,6 @@ class ControlOrden extends conexion
 {
   // obtenerControlOrdenPorUsuario
   public function obtenerOrdenControlPorUsuario($id)
-  public function obtenerOrdenControlPorUsuario($id)
   {
     $this->conectar();
     $sql = "SELECT * FROM controlordenes WHERE estadocontrolorden = true AND idUsuario = $id";
