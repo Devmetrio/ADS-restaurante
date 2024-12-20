@@ -75,7 +75,6 @@ if (validarBoton($btnHabilitar)) {
   $idMesa = intval($_GET['idMesa']); 
   $panelGestionMesasObject = new panelGestionarMesas();
   $panelGestionMesasObject->gestionarMesasShow($mesas);
-
   $viewMensajeValidacionObject = new viewMensajeValidacion();
   $viewMensajeValidacionObject->viewMensajeValidacionShow('question', 'Mensaje', '¿Quiere habilitar esta mesa?', $idMesa, 'btnHabilitar');
 }
