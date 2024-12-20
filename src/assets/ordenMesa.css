@@ -1,19 +1,31 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: white;
+    background-color: #FAF3E0;
+    /* Beige cálido para fondo general */
+    color: #5C4033;
+    /* Marrón suave para texto */
+    overflow: hidden;
 }
 
 .container {
     max-width: 1320px;
     margin: 0 auto;
     padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF6E5;
+    /* Fondo cálido */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .header {
     text-align: center;
     margin-bottom: 20px;
+    color: #8B4513;
+    /* Marrón cálido */
 }
 
 .content {
@@ -25,21 +37,16 @@ body {
 
 .table-section {
     flex: 3;
-    max-height: 600px; /* Limita la altura máxima */
-    overflow: hidden; /* Desactiva la barra de desplazamiento */
-    cursor: grab; /* Cambia el cursor para indicar que es arrastrable */
-    /*user-select: none; /* Deshabilita la selección de texto */
-}
-
-.order-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    overflow: hidden; /* Asegura que la tabla no muestre barras de desplazamiento */
-}
-
-.menu-section {
-    flex: 2;
+    max-height: 600px;
+    padding: 10px;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    background-color: #FFFBE6;
+    /* Beige claro */
+    border: 2px solid #D4A373;
+    /* Marrón claro */
+    border-radius: 10px;
 }
 
 .order-table {
@@ -50,31 +57,59 @@ body {
 
 .order-table th,
 .order-table td {
-    border: 1px solid #444;
+    border: 1px solid #D4A373;
     padding: 7px;
     text-align: center;
 }
 
 .order-table th {
-    background-color: #333;
+    background-color: #FFD699;
+    /* Amarillo cálido */
+    color: #5C4033;
+    /* Marrón oscuro */
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.order-table td.noAccion {
+    background-color: #FFF6E5;
+    /* Beige claro */
+    color: #5C4033;
+    /* Marrón */
+}
+
+.order-table td.check-icon {
+    font-size: 18px;
+    color: #388E3C;
+    /* Verde más oscuro */
+}
+
+.order-table tr:hover {
+    background-color: #FFE4B5;
+    /* Beige suave */
 }
 
 .delete-btn {
-    background-color: red;
+    background-color: #E67300;
+    /* Naranja intenso */
     color: white;
     border: none;
     padding: 5px;
     cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background-color: #FF8C00;
+    /* Naranja más claro */
 }
 
 .categories {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    /* Incrementa la separación entre los botones */
     margin-top: 20px;
     justify-content: center;
-    /* Centra las categorías */
 }
 
 .categories-container {
@@ -87,7 +122,8 @@ body {
 
 .category-name {
     display: block;
-    margin-bottom: 5px; /* Espacio entre el nombre y el ícono */
+    margin-bottom: 5px;
+    color: #5C4033;
 }
 
 .category-icon {
@@ -104,10 +140,10 @@ body {
     flex: 1 1 calc(25% - 20px);
     /* Ajusta el tamaño para que sean uniformes y responsivos */
     max-width: 200px;
-    /* Límite máximo para evitar botones enormes */
-    background-color: #444;
-    color: white;
-    border: none;
+    background-color: #FFDD99;
+    /* Amarillo cálido */
+    color: #5C4033;
+    border: 1px solid #D4A373;
     border-radius: 10px;
     /* Bordes redondeados */
     padding: 15px;
@@ -117,7 +153,8 @@ body {
 }
 
 .category-btn:hover {
-    background-color: #666;
+    background-color: #FFC966;
+    /* Naranja suave */
     transform: scale(1.05);
     /* Efecto visual al pasar el mouse */
 }
@@ -125,27 +162,23 @@ body {
 .menu-items {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    /* Distribución uniforme */
     gap: 7px;
-    /* Espacio entre los elementos */
     margin-top: 20px;
     justify-items: center;
 }
 
 .menu-item {
-    background-color: #333;
-    border: none;
+    background-color: #FFD699;
+    /* Amarillo cálido */
+    border: 1px solid #D4A373;
     border-radius: 10px;
-    /* Bordes redondeados */
     padding: 15px;
     text-align: center;
-    color: white;
+    color: #5C4033;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     width: 100px;
-    /* Tamaño uniforme */
     height: 100px;
-    /* Tamaño uniforme */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -153,20 +186,41 @@ body {
 }
 
 .menu-item:hover {
-    background-color: #666;
+    background-color: #FFC966;
+    /* Naranja suave */
     transform: scale(1.05);
 }
 
 .footer {
     text-align: center;
-    margin-top: 20px;
+    padding: 10px 0;
+    color: #5C4033;
+    background-color: transparent;
+    margin-top: auto;
+    position: relative;
 }
 
-.action-btn {
-    background-color: #444;
-    color: white;
-    border: none;
+.menu-section {
+    flex: 2;
+}
+
+.footer button {
     padding: 10px 20px;
-    margin: 5px;
+    background-color: #FFDD99;
+    /* Amarillo cálido */
+    color: #5C4033;
+    /* Marrón oscuro */
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+.footer button:hover {
+    background-color: #FFC966;
+    /* Naranja suave */
+}
+.inline-header {
+    display: flex; 
+    gap: 20px; 
+    align-items: center; 
 }

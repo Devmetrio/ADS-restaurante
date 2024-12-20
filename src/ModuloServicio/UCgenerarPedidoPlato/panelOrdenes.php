@@ -15,8 +15,10 @@ class panelOrdenes
             <style>
                 body {
                     font-family: Arial, sans-serif;
-                    background-color: #1a1a1a;
-                    color: white;
+                    background-color: #FAF3E0;
+                    /* Beige cálido para fondo general */
+                    color: #5C4033;
+                    /* Marrón suave para texto */
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -27,17 +29,23 @@ class panelOrdenes
                 .container {
                     width: 85%;
                     max-width: 1100px;
-                    border: 1px solid #333;
+                    border: 1px solid #E8D5C4;
+                    /* Beige claro para el borde */
                     padding: 20px;
-                    background-color: #292929;
+                    background-color: #FFF6E5;
+                    /* Fondo cálido y claro */
                     border-radius: 10px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-                    height: 60vh;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    /* Sombra suave */
+                    height: 70vh;
                 }
 
                 h1 {
                     text-align: center;
                     margin-bottom: 20px;
+                    color: #8B4513;
+                    /* Marrón cálido */
+                    user-select: none;
                 }
 
                 .mesas-container {
@@ -48,54 +56,80 @@ class panelOrdenes
 
                 .mesas-list {
                     flex: 1;
-                    border: 2px solid #444;
+                    border: 2px solid #D4A373;
+                    /* Marrón claro */
                     padding: 10px;
                     border-radius: 10px;
                     overflow-y: hidden;
                     max-height: 400px;
                     cursor: grab;
+                    background-color: #FFFBE6;
+                    /* Beige muy claro */
                     user-select: none;
                     /* Deshabilita la selección de texto */
                 }
 
                 .mesas-list button {
-                    display: block;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
                     width: 100%;
                     margin-bottom: 10px;
-                    padding: 10px;
-                    background-color: #444;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
+                    padding: 15px;
+                    background-color: #FFDD99;
+                    /* Amarillo cálido */
+                    color: #5C4033;
+                    /* Marrón suave */
+                    border: 1px solid #D4A373;
+                    /* Borde cálido */
+                    border-radius: 8px;
                     cursor: pointer;
-                    transition: background-color 0.3s;
+                    transition: background-color 0.3s, transform 0.2s;
                 }
 
+                /* Efecto hover */
                 .mesas-list button:hover {
-                    background-color: #555;
+                    background-color: #FFC966;
+                    /* Naranja suave */
+                    color: #5C4033;
+                    /* Marrón oscuro */
+                    transform: scale(1.05);
+                }
+
+                .mesas-list button.selected {
+                    background-color: #E67300;
+                    /* Naranja intenso */
+                    color: white;
+                    font-weight: bold;
+                    border: 2px solid #C05200;
+                    /* Naranja más oscuro */
                 }
 
                 .detalles {
                     flex: 2;
-                    border: 2px solid #444;
+                    border: 2px solid #D4A373;
+                    /* Marrón claro */
                     padding: 10px;
                     border-radius: 5px;
                     overflow-y: hidden;
                     max-height: 400px;
                     cursor: grab;
+                    background-color: #FFFBE6;
+                    /* Beige claro */
                 }
 
                 table {
                     width: 100%;
                     border-collapse: collapse;
                     user-select: none;
-                    /* Deshabilita la selección de texto */
                 }
 
                 table,
                 th,
                 td {
-                    border: 1px solid #444;
+                    border: 1px solid #D4A373;
+                    /* Bordes cálidos */
                 }
 
                 th,
@@ -105,7 +139,10 @@ class panelOrdenes
                 }
 
                 th {
-                    background-color: #444;
+                    background-color: #FFD699;
+                    /* Amarillo cálido */
+                    color: #5C4033;
+                    /* Marrón oscuro */
                 }
 
                 .btn-seleccionar {
@@ -117,8 +154,10 @@ class panelOrdenes
 
                 .btn-seleccionar button {
                     padding: 10px 20px;
-                    background-color: #444;
-                    color: white;
+                    background-color: #FFDD99;
+                    /* Amarillo cálido */
+                    color: #5C4033;
+                    /* Marrón oscuro */
                     border: none;
                     border-radius: 5px;
                     cursor: pointer;
@@ -126,16 +165,17 @@ class panelOrdenes
                 }
 
                 .btn-seleccionar button:hover {
-                    background-color: #555;
+                    background-color: #FFC966;
+                    /* Naranja suave */
                 }
 
-                .mesas-list button.selected {
-                    background-color: #28a745;
-                    color: white;
-                    font-weight: bold;
-                    border: 2px solid #1f7a31;
+                .mesa-icon {
+                    width: 48px;
+                    height: 48px;
+                    margin-top: 5px;
                 }
             </style>
+
         </head>
 
         <body>
@@ -151,8 +191,9 @@ class panelOrdenes
                                     <button class="<?= ($mesa['idMesa'] == $idMesa) ? 'selected' : ''; ?>" value=<?= $mesa['idMesa']; ?> name="btnOrdenMesa" type="submit">
                                         Mesa <?php echo $mesa['idMesa']; ?>
                                     </button>
-                                <?php endforeach; ?>
-                            </form>
+                                    <input type="hidden" value="<?= $mesa['idMesa'] ?>" name="idMesa">
+                                </form>
+                            <?php endforeach; ?>
 
                         <?php else: ?>
                             <p>Cargando...</p>
@@ -204,6 +245,9 @@ class panelOrdenes
                             <button>Completar orden</button>
                         </a>
                     <?php endif ?>
+                    <a href="/src/ModuloSeguridad/UCautenticarUsuario/cerrarSesion.php">
+                        <button>Cerrar Sesion</button>
+                    </a>
                 </div>
             </div>
 

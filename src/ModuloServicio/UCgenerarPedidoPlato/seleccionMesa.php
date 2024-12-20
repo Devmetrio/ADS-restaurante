@@ -1,7 +1,7 @@
 <?php
 class seleccionMesas
 {
-    public function seleccionMesaShow($id = null, $array=null)
+    public function seleccionMesaShow($id = null, $array = null)
     {
 ?>
         <!DOCTYPE html>
@@ -17,8 +17,10 @@ class seleccionMesas
                     font-family: Arial, sans-serif;
                     margin: 0;
                     padding: 0;
-                    background-color: #222;
-                    color: #fff;
+                    background-color: #FCE4D6;
+                    /* Fondo cálido */
+                    color: #4E342E;
+                    /* Texto cálido */
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -32,6 +34,8 @@ class seleccionMesas
 
                 h1 {
                     margin-bottom: 20px;
+                    color: #8D6E63;
+                    /* Título cálido */
                 }
 
                 .mesas-grid {
@@ -49,21 +53,27 @@ class seleccionMesas
                     justify-content: center;
                     flex-direction: column;
                     border-radius: 8px;
-                    border: 2px solid #444;
+                    border: 2px solid #A1887F;
+                    /* Borde cálido */
                     font-size: 14px;
                     font-weight: bold;
                     cursor: pointer;
                     background-color: #4CAF50;
+                    /* Verde más oscuro */
                     color: #fff;
+                    /* Texto blanco */
                 }
 
                 .mesa.ocupado {
                     background-color: #F44336;
+                    /* Mantiene el color de ocupado */
                 }
 
                 .mesa.espera {
                     background-color: #FFEB3B;
+                    /* Mantiene el color de espera */
                     color: #000;
+                    /* Texto negro */
                 }
 
                 .legend {
@@ -87,23 +97,28 @@ class seleccionMesas
                 }
 
                 .legend-item .libre {
-                    background-color: #4CAF50;
+                    background-color: #388E3C;
+                    /* Verde más oscuro para la leyenda */
                 }
 
                 .legend-item .ocupado {
                     background-color: #F44336;
+                    /* Mantiene el color de ocupado */
                 }
 
                 .legend-item .espera {
                     background-color: #FFEB3B;
+                    /* Mantiene el color de espera */
                 }
 
                 .btn-action {
                     margin-top: 20px;
                     padding: 10px 20px;
                     font-size: 16px;
-                    background-color: #444;
-                    color: #fff;
+                    background-color: #FFAB91;
+                    /* Botón cálido */
+                    color: #4E342E;
+                    /* Texto cálido */
                     border: none;
                     border-radius: 5px;
                     cursor: pointer;
@@ -111,20 +126,28 @@ class seleccionMesas
                 }
 
                 .btn-action:hover {
-                    background-color: #666;
+                    background-color: #FF7043;
+                    /* Hover cálido */
                 }
 
                 .mesa.select {
-                    border: 3px solid #2196F3;
-                    background-color: #1976D2;
-                    color: #fff;
+                    border: 3px solid #FF5722;
+                    /* Borde cálido para seleccionado */
+                    background-color: #FF8A65;
+                    /* Fondo cálido para seleccionado */
+                    color: #4E342E;
+                    /* Texto cálido para seleccionado */
                 }
             </style>
+
         </head>
 
         <body>
             <div class="container">
                 <h1>Selección de Mesas</h1>
+                <?php if ($array !== null) : ?>
+                    <h2>Mesas a juntar: <?= $array ?> </h2>
+                <?php endif; ?>
                 <form action="getPedidos.php" method="POST">
                     <input type="hidden" name="idMesa" value="">
                     <input type="hidden" name="capacidad" value="">
@@ -148,8 +171,8 @@ class seleccionMesas
                         <button class="btn-action" type="submit" value="Cancelar" name="btnCancelarSelec">Cancelar seleccion</button>
                         <button class="btn-action" type="submit" value="Juntar" name="btnJuntarMesas">Juntar Mesas</button>
                         <button class="btn-action" type="submit" value="Iniciar" name="btnIniciar">Iniciar Orden</button>
-                        <input type="hidden" value="<?=$array?>" name="mesasSecundarias">
-                        <input type="hidden" value="<?= $id?>" name="idMesa">
+                        <input type="hidden" value="<?= $array ?>" name="mesasSecundarias">
+                        <input type="hidden" value="<?= $id ?>" name="idMesa">
                     <?php endif; ?>
                 </form>
                 <button class="btn-action" onclick="window.location.href='indexPanelOrdenes.php'">Regresar</button>

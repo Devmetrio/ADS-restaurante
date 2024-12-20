@@ -16,14 +16,14 @@ class panelNumerico
                     modalOverlay.style.left = 0;
                     modalOverlay.style.width = '100%';
                     modalOverlay.style.height = '100%';
-                    modalOverlay.style.background = 'rgba(0, 0, 0, 0.6)';
+                    modalOverlay.style.background = 'rgba(204, 173, 97, 0.6)'; // Fondo con un tono cálido
                     modalOverlay.style.display = 'flex';
                     modalOverlay.style.justifyContent = 'center';
                     modalOverlay.style.alignItems = 'center';
 
                     const modal = document.createElement('div');
-                    modal.style.backgroundColor = '#333';
-                    modal.style.border = '2px solid #fff';
+                    modal.style.backgroundColor = '#FFFAE1'; // Beige cálido
+                    modal.style.border = '2px solid #D4A373'; // Marrón claro
                     modal.style.borderRadius = '10px';
                     modal.style.padding = '20px';
                     modal.style.textAlign = 'center';
@@ -40,7 +40,7 @@ class panelNumerico
                     closeButton.textContent = '×';
                     closeButton.style.background = 'transparent';
                     closeButton.style.border = 'none';
-                    closeButton.style.color = '#fff';
+                    closeButton.style.color = '#5C4033'; // Marrón suave
                     closeButton.style.fontSize = '24px';
                     closeButton.style.cursor = 'pointer';
                     closeButton.onclick = () => document.body.removeChild(modalOverlay);
@@ -50,7 +50,7 @@ class panelNumerico
                     const title = document.createElement('h2');
                     title.textContent = 'Ingrese cantidad de personas';
                     title.style.marginBottom = '10px';
-                    title.style.color = '#fff';
+                    title.style.color = '#8B4513'; // Marrón cálido
 
                     const display = document.createElement('div');
                     display.id = 'modal-display';
@@ -58,9 +58,9 @@ class panelNumerico
                     display.style.width = '100%';
                     display.style.height = '50px';
                     display.style.marginBottom = '20px';
-                    display.style.backgroundColor = '#444';
-                    display.style.color = '#fff';
-                    display.style.border = '1px solid #555';
+                    display.style.backgroundColor = '#FFD699'; // Amarillo cálido
+                    display.style.color = '#5C4033'; // Marrón suave
+                    display.style.border = '1px solid #D4A373'; // Borde cálido
                     display.style.borderRadius = '5px';
                     display.style.fontSize = '24px';
                     display.style.textAlign = 'center';
@@ -95,7 +95,7 @@ class panelNumerico
                     deleteButton.textContent = 'BORRAR';
                     deleteButton.style.padding = '10px 20px';
                     deleteButton.style.fontSize = '16px';
-                    deleteButton.style.backgroundColor = '#F44336';
+                    deleteButton.style.backgroundColor = '#F44336'; // Rojo cálido
                     deleteButton.style.color = '#fff';
                     deleteButton.style.border = 'none';
                     deleteButton.style.borderRadius = '5px';
@@ -105,7 +105,7 @@ class panelNumerico
                     okButton.textContent = 'OK';
                     okButton.style.padding = '10px 20px';
                     okButton.style.fontSize = '16px';
-                    okButton.style.backgroundColor = '#444';
+                    okButton.style.backgroundColor = '#E67300'; // Naranja cálido
                     okButton.style.color = '#fff';
                     okButton.style.border = 'none';
                     okButton.style.borderRadius = '5px';
@@ -137,8 +137,8 @@ class panelNumerico
                     button.style.width = '70px';
                     button.style.height = '70px';
                     button.style.fontSize = '24px';
-                    button.style.backgroundColor = '#555';
-                    button.style.color = '#fff';
+                    button.style.backgroundColor = '#FFDD99'; // Amarillo cálido
+                    button.style.color = '#5C4033'; // Marrón suave
                     button.style.border = 'none';
                     button.style.borderRadius = '5px';
                     button.style.cursor = 'pointer';

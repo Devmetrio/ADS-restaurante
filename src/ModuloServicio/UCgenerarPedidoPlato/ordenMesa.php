@@ -24,17 +24,22 @@ class ordenMesa
                 </header>
 
                 <section class="content">
+
                     <!-- SECCIÓN DE LA ORDEN DE MESA (Tabla) -->
                     <div class="table-section">
+                    <div class="inline-header">
                         <?php if (!empty($orden[0]['ControlHora'])): ?>
-                            <h3>Hora iniciada (<?= htmlspecialchars($orden[0]['ControlHora']) ?>) </h3>
+                            <h3>Hora iniciada (<?= htmlspecialchars($orden[0]['ControlHora']) ?>)</h3>
                         <?php endif; ?>
 
                         <?php if (!empty($orden[0]['OrdenHora'])): ?>
-                            <h3>Ultimo pedido (<?= htmlspecialchars($orden[0]['OrdenHora']) ?>) </h3>
+                            <h3>Último pedido (<?= htmlspecialchars($orden[0]['OrdenHora']) ?>)</h3>
                         <?php endif; ?>
+                    </div>
                         <h2>MESA PRINCIPAL: <?= $idMesa ?></h2>
-                        <h4>MESA SECUNDARIAS: <?= $arraySec ?></h4>
+                        <?php if ($arraySec != null): ?>
+                            <h4>MESA SECUNDARIAS: <?= $arraySec ?></h4>
+                        <?php endif; ?>
                         <table class="order-table">
                             <thead>
                                 <tr>
