@@ -27,6 +27,7 @@ class viewMensajeSistema
         }).then((result) => {
           if (result.isConfirmed) {
             localStorage.removeItem('comanda'); 
+            localStorage.removeItem('comanda'); 
                         // Verifica si hay una acción específica y redirige según corresponda
                         if ('<?= $accion ?>' === 'btnHabilitar' || '<?= $accion ?>' === 'btnDeshabilitar') {
                             // Si la acción es relacionada con mesas

@@ -158,39 +158,6 @@ public function actualizarEstadoUsuario($idUsuario, $nuevoEstado) {
       return false; // Error en la actualización
   }
 }
-
-public function obtenerUsuarioPorId($idUsuario) {
-  $this->conectar();
-  $sql = "SELECT * FROM usuarios WHERE idUsuario = ?";
-  $stmt = $this->conectar()->prepare($sql);
-  $stmt->bind_param("i", $idUsuario);
-  $stmt->execute();
-  $resultado = $stmt->get_result();
-
-  if ($resultado->num_rows == 0) {
-      $this->desconectar();
-      return null; // Usuario no encontrado
-  }
-
-  $usuario = $resultado->fetch_assoc();
-  $this->desconectar();
-  return $usuario; // Retorna un array asociativo con los datos del usuario
-}
-
-public function editarUsuario($idUsuario, $login, $password, $estado, $idRol) {
-  $this->conectar();
-  $sql = "UPDATE usuarios SET login = ?, password = ?, estado = ?, idRol = ? WHERE idUsuario = ?";
-  $stmt = $this->conectar()->prepare($sql);
-  $stmt->bind_param("ssiii", $login, $password, $estado, $idRol, $idUsuario);
-
-  if ($stmt->execute()) {
-      $this->desconectar();
-      return true;
-  } else {
-      $this->desconectar();
-      return false;
-  }
-}
 }
 
 ?>

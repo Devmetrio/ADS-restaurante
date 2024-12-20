@@ -4,7 +4,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeSistema.php
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/compartido/viewMensajeValidacion.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarUsuarios/panelGestionarUsuarios.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarUsuarios/formAgregarUsuarios.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . '/src/ModuloAdministracion/UCgestionarUsuarios/formEditarUsuarios.php');
 
 $btnDeshabilitar = $_POST['btnDeshabilitar'] ?? null;
 $btnHabilitar = $_POST['btnHabilitar'] ?? null;
@@ -14,12 +13,8 @@ $accion = $_GET['accion'] ?? null;
 $AgregarAceptar = $_POST['AbtnAceptar'] ?? null;
 $AgregarCancelar = $_POST['AbtnCancelar'] ?? null;
 
-$EditarAceptar = $_POST['btnActualizarUsuario'] ?? null;
-$EditarCancelar = $_POST['btnCancelar'] ?? null;
-
 $usuariosObject = new Usuario();
 $usuarios = $usuariosObject->obtenerUsuarios();
-
 
 $nombreCampoErroneo = '';
 $mensajeError = '';
@@ -86,36 +81,7 @@ if (validarBoton($AgregarAceptar)) {
 
   $viewMensajeSistemaObject = new viewMensajeSistema();
   $viewMensajeSistemaObject->viewMensajeSistemaShow('info', 'Acción cancelada', 'Se ha cancelado la acción de agregar usuario');
-} elseif (validarBoton($EditarAceptar)) {
-    // Obtener los datos del formulario
-    $idUsuario = intval($_POST['idUsuario']);
-    $login = $_POST['login'];
-    $password = $_POST['password'];
-    $estado = intval($_POST['estado']);
-    $idRol = intval($_POST['idRol']);
-  
-    // Validar que los datos sean correctos
-    if(validarDatos($login, $password, $estado, $idRol)) {
-      $controlGestionUsuariosObject = new controlGestionUsuarios();
-      $controlGestionUsuariosObject->actualizarUsuario($idUsuario, $login, $password, $estado, $idRol); 
-    } else {
-        $usuarioRecibido = new Usuario();
-        $usuarior = $usuarioRecibido->obtenerUsuarioPorId($idUsuario); 
-
-        $formEditarUsuariosObject = new formEditarUsuarios();
-        $formEditarUsuariosObject->formEditarUsuariosShow($usuarior);
-  
-      $viewMensajeSistemaObject = new viewMensajeSistema();
-      $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Campos inválidos', 'Algunos campos tienen valores incorrectos o vacíos.');
-    }
-  } elseif(validarBoton($EditarCancelar)) {
-    // Si se cancela la acción, volver a mostrar el panel de usuarios
-    $panelGestionUsuariosObject = new panelGestionarUsuarios();
-    $panelGestionUsuariosObject->gestionarUsuariosShow($usuarios);
-  
-    $viewMensajeSistemaObject = new viewMensajeSistema();
-    $viewMensajeSistemaObject->viewMensajeSistemaShow('info', 'Acción cancelada', 'Se ha cancelado la acción de editar usuario');
-  } else {
+} else {
   // Si no se presiona ningún botón válido, mostrar mensaje de acceso denegado
   $viewMensajeSistemaObject = new viewMensajeSistema();
   $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Acceso denegado', 'Error, no se pudo completar la acción');
@@ -170,7 +136,6 @@ elseif ($accion === "btnDeshabilitar") {
         $viewMessageSistemaObject->viewMensajeSistemaShow('info', 'Confirmación', 'Se ha cancelado la deshabilitación del usuario');
     }
 }
-
 
 ?>
 

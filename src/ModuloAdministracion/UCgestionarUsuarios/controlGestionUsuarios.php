@@ -30,12 +30,4 @@ class controlGestionUsuarios
     header('Location: /src/ModuloAdministracion/UCgestionarUsuarios/indexGestionarUsuarios.php');
   }
 
-  public function actualizarUsuario($idUsuario, $login, $password, $estado, $idRol){
-    $usuarioObject = new Usuario();
-    $usuarioObject->editarUsuario($idUsuario, $login, $password, $estado, $idRol);
-
-    header('Location: /src/ModuloAdministracion/UCgestionarUsuarios/indexGestionarUsuarios.php');
-  }
-
-
 }
