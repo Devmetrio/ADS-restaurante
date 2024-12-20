@@ -11,6 +11,7 @@ class verDetallesReserva
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Detalles de la Reserva</title>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+            <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css" rel="stylesheet">
         </head>
         <body class="bg-dark text-light">
             <div class="container mt-5">
@@ -32,7 +33,7 @@ class verDetallesReserva
                 </div>
                 <div class="d-flex justify-content-between mt-4">
                     <form action="getIngreso.php" method="POST">
-                        <button type="submit" class="btn btn-secondary" value="Regresar" name="btnRegresarPanel">Regresar</button>
+                        <button type="submit" name="btnRegresarPanel" class="btn-regresar">Regresar</button>
                     </form>
                     <form action="/src/ModuloServicio/UCgestionarIngresoClientes/getIngreso.php?idReserva=<?= htmlspecialchars($detallesReserva['idReserva']) ?>" method="POST">
     <button class="btn btn-primary btn-accion" type="submit" name="btnConfirmarReserva">

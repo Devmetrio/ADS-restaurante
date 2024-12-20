@@ -1,7 +1,7 @@
 <?php
 class gestionarReserva
 {
-    public function gestionarReservaShow($reservas, $fecha)
+    public function gestionarReservaShow($reservas, $fecha, $resultadoBusqueda = null)
     {
         ?>
         <!DOCTYPE html>
@@ -133,12 +133,12 @@ class gestionarReserva
                 <h1>Gestión de Reservas</h1>
 
                 <!-- Barra de búsqueda -->
-                <form action="/src/ModuloServicio/UCgestionarIngresoClientes/getIngreso.php" method="POST" class="search-bar">
-                    <input type="text" name="busqueda" placeholder="Buscar reserva">
-                    <button type="submit">Buscar</button>
+                <form action="/src/ModuloServicio/UCgestionarIngresoClientes/getIngreso.php" method="POST" class="search-bar" onsubmit="return validarBusqueda();">
+                    <input type="text" name="busqueda" placeholder="Buscar reserva" maxlength="40" pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios." required>
+                    <button type="submit" name="btnBuscarReserva">Buscar</button>
                 </form>
 
-                <h2>Reservas para el <?php echo $fecha; ?></h2>
+                <h2>Reservas para el <?php echo htmlspecialchars($fecha); ?></h2>
                 <table>
                     <tr>
                         <th>Hora</th>
@@ -147,37 +147,48 @@ class gestionarReserva
                         <th>Mesas adicionales</th>
                         <th>Acciones</th>
                     </tr>
-                    <?php if ($reservas && $reservas->num_rows > 0): ?>
-                        <?php while ($reserva = $reservas->fetch_assoc()): ?>
+                    <?php
+                    // Mostrar reservas filtradas si existen
+                    $reservasMostrar = is_array($reservas) ? $reservas : [];
+
+                    if (!empty($reservasMostrar)): ?>
+                        <?php foreach ($reservasMostrar as $reserva): ?>
                             <tr>
-                                <td><?php echo $reserva['horaReserva']; ?></td>
-                                <td><?php echo $reserva['nombreCliente']; ?></td>
-                                <td><?php echo $reserva['idMesa']; ?></td>
-                                <td><?php echo $reserva['mesasecundarias'] ? $reserva['mesasecundarias'] : 'N/A'; ?></td>
+                                <td><?php echo htmlspecialchars($reserva['horaReserva']); ?></td>
+                                <td><?php echo htmlspecialchars($reserva['nombreCliente']); ?></td>
+                                <td><?php echo htmlspecialchars($reserva['idMesa']); ?></td>
+                                <td><?php echo isset($reserva['mesasecundarias']) ? htmlspecialchars($reserva['mesasecundarias']) : 'N/A'; ?></td>
                                 <td>
                                     <!-- Botón Ver Detalles -->
                                     <form action="/src/ModuloServicio/UCgestionarIngresoClientes/getIngreso.php" method="POST" style="display: inline;">
-                                        <input type="hidden" name="idReserva" value="<?php echo $reserva['idReserva']; ?>">
+                                        <input type="hidden" name="idReserva" value="<?php echo htmlspecialchars($reserva['idReserva']); ?>">
                                         <button type="submit" name="btnverDetalles">Ver Detalles</button>
                                     </form>
-                                    <!-- Botón adicional -->
+                                    <!-- Botón Cancelar -->
                                     <form action="/src/ModuloServicio/UCgestionarReserva/getReserva.php" method="POST" style="display: inline;">
-                                        <input type="hidden" name="idReserva" value="<?php echo $reserva['idReserva']; ?>">
+                                        <input type="hidden" name="idReserva" value="<?php echo htmlspecialchars($reserva['idReserva']); ?>">
                                         <button type="submit">Cancelar</button>
                                     </form>
                                 </td>
                             </tr>
-                        <?php endwhile; ?>
+                        <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="5" class="no-reservations">No hay reservas en curso para esta fecha.</td>
+                            <td colspan="5" class="no-reservations">
+                                <?php if (isset($_SESSION['mensajeBusqueda'])): ?>
+                                    <?php echo htmlspecialchars($_SESSION['mensajeBusqueda']); ?>
+                                    <?php unset($_SESSION['mensajeBusqueda']); ?>
+                                <?php else: ?>
+                                    No hay reservas en curso para esta fecha.
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endif; ?>
                 </table>
                 <div class="btn-container">
                     <!-- Primer formulario -->
                     <form action="/src/ModuloServicio/UCgestionarReserva/getReserva.php" method="POST">
-                        <input type="hidden" value="<?=$fecha ?>" name="fechaSeleccionada">
+                        <input type="hidden" value="<?php echo htmlspecialchars($fecha); ?>" name="fechaSeleccionada">
                         <button type="submit" name="btnAgregarReserva">Agregar reserva</button>
                     </form>
                     <button type="button" onclick="window.location.href='indexCalendarioReserva.php';">Calendario</button>
@@ -188,6 +199,16 @@ class gestionarReserva
                 </div>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
+            <script>
+                function validarBusqueda() {
+                    const busqueda = document.querySelector('input[name="busqueda"]').value.trim();
+                    if (!busqueda || busqueda.length > 40 || !/^[A-Za-zÀ-ÿ\s]+$/.test(busqueda)) {
+                        Swal.fire('Error', 'Por favor, ingrese un nombre válido (solo letras y espacios, máximo 40 caracteres).', 'error');
+                        return false;
+                    }
+                    return true;
+                }
+            </script>
         </body>
         </html>
         <?php
