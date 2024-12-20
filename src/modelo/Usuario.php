@@ -110,6 +110,54 @@ class Usuario extends conexion {
     $id= $fila['idUsuario'];
     return $id;
 }
+
+public function obtenerUsuarios(){
+  $this->conectar();
+  $sql = "SELECT * FROM usuarios";
+  $respuesta = $this->conectar()->query($sql);
+
+  // Verificar si se encontró alguna fila
+  if ($respuesta->num_rows == 0) {
+    $this->desconectar();
+    return null;
+  }
+
+  $this->desconectar();
+  return $respuesta;
+} 
+
+public function agregarUsuario($login,$password,$estado,$idRol){
+  $this->conectar();
+  $sql = "INSERT INTO usuarios (login, password, estado, idRol) VALUES (?, ?, ?, ?)";
+  $stmt = $this->conectar()->prepare($sql);
+
+  $stmt->bind_param("ssii", $login, $password, $estado, $idRol);
+  if ($stmt->execute()) {
+    // Si se ejecuta correctamente, retornar true
+    return true;
+  } else {
+    // Si ocurre un error, retornar false
+    return false;
+  }
+
+  $this->desconectar();
+}
+
+public function actualizarEstadoUsuario($idUsuario, $nuevoEstado) {
+  $this->conectar();
+  $sql = "UPDATE usuarios SET estado = ? WHERE idUsuario = ?";
+  $stmt = $this->conectar()->prepare($sql);
+
+  $stmt->bind_param("ii", $nuevoEstado, $idUsuario);
+
+  if ($stmt->execute()) {
+      $this->desconectar();
+      return true; // Actualización exitosa
+  } else {
+      $this->desconectar();
+      return false; // Error en la actualización
+  }
+}
 }
 
 ?>
