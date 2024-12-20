@@ -26,8 +26,8 @@ class modalJuntarMesa {
                 justify-content: center;
                 z-index: 1000;">
                 <form action="getPedidos.php" method="POST" style="
-                    background-color: #333;
-                    color: #fff;
+                    background-color: #2c3e50;
+                    color: #ecf0f1;
                     padding: 20px;
                     border-radius: 15px;
                     width: 450px;
@@ -39,12 +39,12 @@ class modalJuntarMesa {
                     <h3 style="margin-bottom: 20px;">MESA PRINCIPAL</h3>
                     <div style="
                         margin: 10px auto;
-                        border: 2px solid #999;
+                        border: 2px solid #95a5a6;
                         padding: 10px;
                         width: 80%;
                         text-align: center;
                         font-weight: bold;
-                        background-color: #444;
+                        background-color: #34495e;
                         border-radius: 5px;">
                         MESA <?php echo $idMesa; ?>
                         <input type="hidden" name="mesaPrincipal" value="<?php echo $idMesa; ?>">
@@ -57,9 +57,9 @@ class modalJuntarMesa {
                             width: 100%;
                             padding: 10px;
                             border-radius: 10px;
-                            border: 1px solid #777;
-                            background-color: #555;
-                            color: #fff;
+                            border: 1px solid #7f8c8d;
+                            background-color: #2c3e50;
+                            color: #ecf0f1;
                             font-size: 16px;
                             box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                             <option value="">Seleccione una Mesa</option>
@@ -71,9 +71,9 @@ class modalJuntarMesa {
                             width: 100%;
                             padding: 10px;
                             border-radius: 10px;
-                            border: 1px solid #777;
-                            background-color: #555;
-                            color: #fff;
+                            border: 1px solid #7f8c8d;
+                            background-color: #2c3e50;
+                            color: #ecf0f1;
                             font-size: 16px;
                             box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                             <option value="">Seleccione una Mesa</option>
@@ -85,9 +85,9 @@ class modalJuntarMesa {
                             width: 100%;
                             padding: 10px;
                             border-radius: 10px;
-                            border: 1px solid #777;
-                            background-color: #555;
-                            color: #fff;
+                            border: 1px solid #7f8c8d;
+                            background-color: #2c3e50;
+                            color: #ecf0f1;
                             font-size: 16px;
                             box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                             <option value="">Seleccione una Mesa</option>
@@ -100,7 +100,7 @@ class modalJuntarMesa {
                         <button type="submit" style="
                             margin: 5px;
                             padding: 10px 20px;
-                            background-color: #28a745;
+                            background-color: #27ae60;
                             color: #fff;
                             border: none;
                             border-radius: 5px;
@@ -109,7 +109,7 @@ class modalJuntarMesa {
                         <button type="button" style="
                             margin: 5px;
                             padding: 10px 20px;
-                            background-color: #dc3545;
+                            background-color: #e74c3c;
                             color: #fff;
                             border: none;
                             border-radius: 5px;

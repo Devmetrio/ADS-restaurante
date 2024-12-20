@@ -79,4 +79,63 @@ class Mesa extends conexion
     $this->desconectar();
     return $respuesta->fetch_all(MYSQLI_ASSOC);
   }
+
+  public function cambiarEstadoMesa($idMesa, $nuevoEstado)
+{
+    $this->conectar();
+    $sql = "UPDATE mesas SET idMesaEstado = ? WHERE idMesa = ?";
+    $stmt = $this->conectar()->prepare($sql);
+    $stmt->bind_param("ii", $nuevoEstado, $idMesa);
+    $stmt->execute();
+    $stmt->close();
+    $this->desconectar();
+}
+
+public function obtenerEstadoMesa($idMesa)
+{
+    $this->conectar();
+    $sql = "SELECT idMesaEstado FROM mesas WHERE idMesa = ?";
+    $stmt = $this->conectar()->prepare($sql);
+    $stmt->bind_param('i', $idMesa);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $estado = $result->fetch_assoc()['idMesaEstado'];
+    $stmt->close();
+    $this->desconectar();
+    return $estado;
+}
+
+public function cambiarEstadoLibreAOcupado($idMesa)
+{
+    $this->conectar();
+    
+    // Verificar el estado actual de la mesa
+    $sql = "SELECT idMesaEstado FROM mesas WHERE idMesa = ?";
+    $stmt = $this->conectar()->prepare($sql);
+    $stmt->bind_param('i', $idMesa);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $estadoActual = $result->fetch_assoc()['idMesaEstado'];
+    $stmt->close();
+
+    // Permitir el cambio solo si el estado actual es "Libre" (idMesaEstado = 1)
+    if ($estadoActual == 1) {
+        $nuevoEstado = 3; // "Ocupado"
+
+        // Actualizar el estado de la mesa
+        $sqlUpdate = "UPDATE mesas SET idMesaEstado = ? WHERE idMesa = ?";
+        $stmtUpdate = $this->conectar()->prepare($sqlUpdate);
+        $stmtUpdate->bind_param('ii', $nuevoEstado, $idMesa);
+        $stmtUpdate->execute();
+        $stmtUpdate->close();
+
+        $this->desconectar();
+        return true; // Cambio realizado con éxito
+    }
+
+    $this->desconectar();
+    return false; // No se permitió el cambio
+}
+
+
 }

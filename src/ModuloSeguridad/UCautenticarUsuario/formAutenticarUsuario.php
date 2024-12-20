@@ -1,5 +1,25 @@
 <?php
+<<<<<<< HEAD
 @session_destroy();
+=======
+// Inicia la sesión antes de manipularla
+session_start();
+
+// Limpia todas las variables de sesión
+$_SESSION = [];
+
+// Destruye la sesión
+session_destroy();
+
+// Elimina la cookie de sesión, si existe
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
+}
+>>>>>>> e4afb0ab662bb71b526a59eda21adc15a7b1322e
 
 class FormAutenticacionUsuario
 {
