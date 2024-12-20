@@ -15,7 +15,7 @@ $idUsuario = $_SESSION['id'];
 $idControl = null;
 
 $controlOrdenObject = new ControlOrden();
-$controlOrdenes = $controlOrdenObject->obtenerOrdenControl($idUsuario);
+$controlOrdenes = $controlOrdenObject->obtenerOrdenControlPorUsuario($idUsuario);
 $arrayMesaSec = null;
 if($idMesa!= null){
     $ordenDetallesObject = new OrdenDetalle();
