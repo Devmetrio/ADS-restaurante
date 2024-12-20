@@ -70,6 +70,7 @@ function validarMesasSeleccionadas($mesa1, $mesa2, $mesa3) {
 
 // Declaracion de variables 
 $btnOrdenMesa = $_POST['btnOrdenMesa'] ?? null;
+$btnSeleccionarMesa = $_POST['btnSeleccionarMesa'] ?? null;
 $btnMesaEnviada = $_POST['btnMesaEnviada'] ?? null;
 $btnCancelarSelec = $_POST['btnCancelarSelec'] ?? null;
 $btnJuntarMesas = $_POST['btnJuntarMesas'] ?? null;
@@ -81,7 +82,11 @@ $accion = $_GET['opcion'] ?? null;
 
 // Flujo principal
 if (validarBoton($btnOrdenMesa)) {
-  redirigirIndexPanelOrdenes();
+  $idMesa = $_POST['idMesa'];
+  $controlPedidosObject = new controlPedidos();
+  $controlPedidosObject->mostrarOrdenDetalles($idMesa);
+} elseif(validarBoton($btnSeleccionarMesa)) {
+  header('Location: /src/ModuloServicio/UCgenerarPedidoPlato/indexSeleccionMesas.php');
 } elseif (validarBoton($btnMesaEnviada)) {
   $idMesaEnviada = $_POST['idMesa'];
   $valorMesa = $_POST['btnMesaEnviada'];
@@ -138,7 +143,6 @@ if (validarBoton($btnOrdenMesa)) {
   $controlPedidosObject = new controlPedidos();
   $controlPedidosObject->juntarMesas($idMesa);
 } elseif(validarBoton($btnAceptarJuntar)){
-  $idMesa = $_POST['idMesa'];
   $mesaSecundaria1 = $_POST['mesaSecundaria1'];
   $mesaSecundaria2 = $_POST['mesaSecundaria2'];
   $mesaSecundaria3 = $_POST['mesaSecundaria3'];
@@ -157,6 +161,12 @@ if (validarBoton($btnOrdenMesa)) {
     }
 
     redirigirIndexSeleccionMesas($mesaPrincipal, $mesasSeleccionadas);
+  } else{
+    $seleccionMesasObject = new seleccionMesas();
+    $seleccionMesasObject->seleccionMesaShow();
+  
+    $viewMensajeSistemaObject = new viewMensajeSistema();
+    $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', '!Ingrese mesas secundarias!');
   }
 
 } elseif (validarBoton($btnIniciarOrden)) {
@@ -183,8 +193,8 @@ if (validarBoton($btnOrdenMesa)) {
     $controlPedidosObject->enviarOrden($comanda, $idControl, $idMesa);
   }
 } else {
-  $seleccionMesasObject = new seleccionMesas();
-  $seleccionMesasObject->seleccionMesaShow();
+  $panelOrdenesObject = new panelOrdenes();
+  $panelOrdenesObject->panelOrdenesShow();
 
   $viewMensajeSistemaObject = new viewMensajeSistema();
   $viewMensajeSistemaObject->viewMensajeSistemaShow('error', 'Error', 'No se puede concretar la accion', '/src/ModuloServicio/UCgenerarPedidoPlato/indexPanelOrdenes.php');

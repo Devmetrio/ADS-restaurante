@@ -111,9 +111,9 @@ $loop->addPeriodicTimer(5, function () use ($webSocketServer) {
         if (!empty($notificaciones)) {
             echo "Enviando notificaciones...\n";
             $mensaje = "Cambiando estados";
+            $notificacion->marcarNotificaciones();
             $webSocketServer->notificarCambios($mensaje);
             // Marcar las notificaciones como procesadas
-            $notificacion->marcarNotificaciones();
         }
     } catch (Exception $e) {
         echo "Error al manejar notificaciones: " . $e->getMessage() . "\n";
