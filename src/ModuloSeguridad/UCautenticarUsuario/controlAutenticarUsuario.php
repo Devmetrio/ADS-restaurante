@@ -41,7 +41,7 @@ class controlAutenticarUsuario
           $_SESSION['autenticado'] = "SI";
 
           if($_SESSION['rol'] == 'administrador'){
-            header('Location: /src/ModuloSeguridad/UCautenticarUsuario/indexPanelPrincipalSistema.php');
+            header('Location: /src/ModuloAdministracion/UCgestionarUsuarios/indexGestionarUsuarios.php');
           } elseif($_SESSION['rol'] == 'anfitrion de bienvenida'){
             header('Location: /src/ModuloServicio/UCgestionarReserva/indexCalendarioReserva.php');
           } elseif($_SESSION['rol'] == 'anfitrion de servicio'){
